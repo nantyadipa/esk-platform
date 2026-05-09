@@ -1,6 +1,5 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/db'
 import { registrationFormSchema } from '@/lib/validations'
 import type { ActionResult } from '@/types'
@@ -58,7 +57,7 @@ export async function generateWhatsAppURL(formData: FormData): Promise<ActionRes
     const url = `https://wa.me/${encodedPhone}?text=${encodedMessage}`
 
     return { success: true, data: { url } }
-  } catch (error) {
+  } catch {
     return { success: false, error: 'Ada yang salah. Coba lagi ya.' }
   }
 }

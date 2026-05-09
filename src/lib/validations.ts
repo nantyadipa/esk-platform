@@ -4,7 +4,7 @@ export const registrationFormSchema = z.object({
   name: z.string().min(1, 'Nama tidak boleh kosong'),
   phone: z.string().min(8, 'No. WhatsApp tidak valid').max(15, 'No. WhatsApp tidak valid'),
   selectedClass: z.string().min(1, 'Pilih kelas terlebih dahulu'),
-  mode: z.enum(['online', 'offline'], { required_error: 'Pilih mode kelas' }),
+  mode: z.enum(['online', 'offline'], { message: 'Pilih mode kelas' }),
   referralCode: z.string().optional(),
 })
 
@@ -17,6 +17,7 @@ export const courseSchema = z.object({
   discountRate: z.coerce.number().min(0).max(1, 'Diskon tidak valid'),
   numberOfSessions: z.coerce.number().int().min(1, 'Jumlah pertemuan minimal 1'),
   modeAvailable: z.enum(['online', 'offline', 'both']),
+  isActive: z.boolean().optional().default(true),
 })
 
 export type CourseFormData = z.infer<typeof courseSchema>

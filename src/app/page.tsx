@@ -1,65 +1,78 @@
-import Image from "next/image";
+import Link from 'next/link'
+import { getActiveCourses, getAllContent } from '@/lib/actions/course-actions'
+import { LandingClient } from '@/components/landing/landing-client'
 
-export default function Home() {
+export const revalidate = 300
+
+const DEFAULT_CONTENT: Record<string, string> = {
+  hero_title: 'Belajar English Tanpa Ribet',
+  hero_subtitle: 'Pilih kelas, isi form, langsung terhubung ke admin via WhatsApp. Tanpa perlu bertanya-tanya.',
+  hero_cta_text: 'Daftar Sekarang',
+  footer_copyright: '© 2026 English Sepulang Kerja. All rights reserved.',
+}
+
+export default async function LandingPage() {
+  const [courses, contentRecords] = await Promise.all([
+    getActiveCourses(),
+    getAllContent(),
+  ])
+
+  const content = { ...DEFAULT_CONTENT, ...contentRecords }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <main data-testid="landing-page" className="min-h-screen bg-[var(--color-bg-page)]">
+      <nav data-testid="nav-header" className="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-[var(--color-border)]">
+        <div className="max-w-[1100px] mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div
+              data-testid="logo-mark"
+              className="w-9 h-9 rounded-full bg-[var(--color-primary)] flex items-center justify-center"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+              <span className="text-white font-bold text-xs font-display">ESK</span>
+            </div>
+            <div>
+              <h1 className="font-display font-bold text-[var(--color-text-primary)] text-sm leading-tight">
+                English Sepulang Kerja
+              </h1>
+              <p className="text-xs text-[var(--color-text-secondary)]">
+                Jadwal Rapi, Mengajar Tenang
+              </p>
+            </div>
+          </div>
+          <Link
+            href="#harga-kelas"
+            data-testid="nav-cta"
+            className="bg-[var(--color-primary)] text-white px-5 py-2.5 rounded-full text-sm font-semibold shadow-[var(--shadow-cta)] hover:bg-[var(--color-primary-dark)] transition-all"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            Lihat Kelas
+          </Link>
         </div>
-      </main>
-    </div>
-  );
+      </nav>
+
+      <section data-testid="hero-section" className="max-w-[1100px] mx-auto px-6 py-16 text-center">
+        <h2 className="font-display font-extrabold text-4xl md:text-5xl text-[var(--color-text-primary)] mb-4">
+          {content.hero_title}
+        </h2>
+        <p className="text-lg text-[var(--color-text-secondary)] max-w-2xl mx-auto mb-8">
+          {content.hero_subtitle}
+        </p>
+        <Link
+          href="#harga-kelas"
+          data-testid="hero-cta"
+          className="inline-flex items-center gap-2 bg-[var(--color-primary)] text-white px-8 py-4 rounded-full text-base font-semibold shadow-[var(--shadow-cta)] hover:bg-[var(--color-primary-dark)] hover:shadow-[var(--shadow-cta-lg)] hover:-translate-y-0.5 transition-all"
+        >
+          {content.hero_cta_text}
+          <span aria-hidden="true">&#8594;</span>
+        </Link>
+      </section>
+
+      <LandingClient courses={courses} />
+
+      <footer data-testid="footer" className="border-t border-[var(--color-border)] mt-16 py-8">
+        <div className="max-w-[1100px] mx-auto px-6 text-center text-sm text-[var(--color-text-secondary)]">
+          <p>{content.footer_copyright}</p>
+        </div>
+      </footer>
+    </main>
+  )
 }

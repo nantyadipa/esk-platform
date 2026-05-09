@@ -1,9 +1,11 @@
 'use client'
 
 import { useAuth } from '@/hooks/use-auth'
+import { usePathname } from 'next/navigation'
 
 export function AdminSidebar() {
   const { user, signOut } = useAuth()
+  const pathname = usePathname()
 
   const navItems = [
     { href: '/admin', label: 'Overview', testId: 'admin-nav-overview' },
@@ -13,6 +15,11 @@ export function AdminSidebar() {
     { href: '/admin/content', label: 'Konten', testId: 'admin-nav-content' },
     { href: '/admin/settings', label: 'Pengaturan', testId: 'admin-nav-settings' },
   ]
+
+  const isActive = (href: string) => {
+    if (href === '/admin') return pathname === '/admin'
+    return pathname.startsWith(href)
+  }
 
   return (
     <aside
@@ -39,7 +46,11 @@ export function AdminSidebar() {
             key={item.href}
             href={item.href}
             data-testid={item.testId}
-            className="block px-3 py-2 rounded-lg text-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-primary-ghost)] hover:text-[var(--color-text-accent)] transition-colors"
+            className={`block px-3 py-2 rounded-lg text-sm transition-colors ${
+              isActive(item.href)
+                ? 'bg-[var(--color-primary-ghost)] text-[var(--color-text-accent)] font-semibold'
+                : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-primary-ghost)] hover:text-[var(--color-text-accent)]'
+            }`}
           >
             {item.label}
           </a>
@@ -51,7 +62,7 @@ export function AdminSidebar() {
           <button
             onClick={signOut}
             data-testid="admin-btn-logout"
-            className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-accent)]"
+            className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-accent)] cursor-pointer"
           >
             Keluar
           </button>

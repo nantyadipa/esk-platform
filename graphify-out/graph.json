@@ -1,0 +1,2070 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "hyperedges": [
+      {
+        "id": "prisma_schema_type_definitions_parity",
+        "label": "Prisma schema mirrors TypeScript types",
+        "nodes": [
+          "types_course",
+          "types_student",
+          "types_schedule",
+          "types_content",
+          "types_admin",
+          "types_whatsappconfig",
+          "prisma_course",
+          "prisma_student",
+          "prisma_schedule",
+          "prisma_content",
+          "prisma_admin",
+          "prisma_whatsappconfig"
+        ],
+        "relation": "form",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "esk-platform/src/types/index.ts"
+      },
+      {
+        "id": "registration_flow_captcha_whatsapp",
+        "label": "Registration with captcha and WhatsApp notification",
+        "nodes": [
+          "registration-actions_verifyhcaptcha",
+          "registration-actions_generatewhatsappurl",
+          "validations_registrationformschema",
+          "types_whatsappconfig",
+          "prisma_whatsappconfig"
+        ],
+        "relation": "participate_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "esk-platform/src/lib/actions/registration-actions.ts"
+      },
+      {
+        "id": "price_calculation_utilities",
+        "label": "Price formatting and discount calculation utilities",
+        "nodes": [
+          "utils_formatcurrency",
+          "utils_calculatefinalprice",
+          "utils_formatdiscountdisplay"
+        ],
+        "relation": "participate_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "esk-platform/src/lib/utils.ts"
+      },
+      {
+        "id": "course_crud_server_actions",
+        "label": "Course CRUD operations via server actions",
+        "nodes": [
+          "course-actions_getcourses",
+          "course-actions_getactivecourses",
+          "course-actions_createcourse",
+          "course-actions_updatecourse",
+          "course-actions_deletecourse",
+          "validations_courseschema",
+          "db_prisma",
+          "prisma_course"
+        ],
+        "relation": "participate_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "esk-platform/src/lib/actions/course-actions.ts"
+      },
+      {
+        "id": "many_to_many_student_schedule",
+        "label": "Student-Schedule many-to-many relationship",
+        "nodes": [
+          "prisma_student",
+          "prisma_schedule",
+          "prisma_schedulestudent"
+        ],
+        "relation": "form",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "esk-platform/prisma/schema.prisma"
+      },
+      {
+        "id": "course_selection_flow",
+        "label": "Course Selection to Registration Flow",
+        "nodes": [
+          "landing-client",
+          "course-card",
+          "registration-form"
+        ],
+        "relation": "participates_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "src/components/landing/landing-client.tsx"
+      },
+      {
+        "id": "auth_context_pattern",
+        "label": "Auth Context Distribution Pattern",
+        "nodes": [
+          "auth-provider",
+          "use-auth",
+          "admin-sidebar"
+        ],
+        "relation": "participates_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "src/hooks/use-auth.tsx"
+      },
+      {
+        "id": "admin_auth_protection",
+        "label": "Admin Route Protection Pattern",
+        "nodes": [
+          "middleware",
+          "admin-login-form",
+          "auth-provider"
+        ],
+        "relation": "participates_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "middleware.ts"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "label": "eslint.config.mjs",
+      "file_type": "code",
+      "source_file": "eslint.config.mjs",
+      "source_location": "L1",
+      "id": "eslint_config_mjs",
+      "community": 24,
+      "norm_label": "eslint.config.mjs"
+    },
+    {
+      "label": "middleware.ts",
+      "file_type": "code",
+      "source_file": "middleware.ts",
+      "source_location": "L1",
+      "id": "middleware_ts",
+      "community": 10,
+      "norm_label": "middleware.ts"
+    },
+    {
+      "label": "middleware()",
+      "file_type": "code",
+      "source_file": "middleware.ts",
+      "source_location": "L5",
+      "id": "esk_platform_middleware_middleware",
+      "community": 10,
+      "norm_label": "middleware()"
+    },
+    {
+      "label": "layout.tsx",
+      "file_type": "code",
+      "source_file": "src/app/layout.tsx",
+      "source_location": "L1",
+      "id": "src_app_layout_tsx",
+      "community": 25,
+      "norm_label": "layout.tsx"
+    },
+    {
+      "label": "not-found.tsx",
+      "file_type": "code",
+      "source_file": "src/app/not-found.tsx",
+      "source_location": "L1",
+      "id": "src_app_not_found_tsx",
+      "community": 11,
+      "norm_label": "not-found.tsx"
+    },
+    {
+      "label": "NotFound()",
+      "file_type": "code",
+      "source_file": "src/app/not-found.tsx",
+      "source_location": "L3",
+      "id": "app_not_found_notfound",
+      "community": 11,
+      "norm_label": "notfound()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L1",
+      "id": "src_app_page_tsx",
+      "community": 12,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "LandingPage()",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L7",
+      "id": "app_page_landingpage",
+      "community": 12,
+      "norm_label": "landingpage()"
+    },
+    {
+      "label": "layout.tsx",
+      "file_type": "code",
+      "source_file": "src/app/admin/layout.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_layout_tsx",
+      "community": 13,
+      "norm_label": "layout.tsx"
+    },
+    {
+      "label": "AdminRootLayout()",
+      "file_type": "code",
+      "source_file": "src/app/admin/layout.tsx",
+      "source_location": "L3",
+      "id": "admin_layout_adminrootlayout",
+      "community": 13,
+      "norm_label": "adminrootlayout()"
+    },
+    {
+      "label": "layout.tsx",
+      "file_type": "code",
+      "source_file": "src/app/admin/(dashboard)/layout.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_dashboard_layout_tsx",
+      "community": 14,
+      "norm_label": "layout.tsx"
+    },
+    {
+      "label": "AdminLayout()",
+      "file_type": "code",
+      "source_file": "src/app/admin/(dashboard)/layout.tsx",
+      "source_location": "L6",
+      "id": "dashboard_layout_adminlayout",
+      "community": 14,
+      "norm_label": "adminlayout()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/admin/(dashboard)/page.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_dashboard_page_tsx",
+      "community": 15,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "AdminOverviewPage()",
+      "file_type": "code",
+      "source_file": "src/app/admin/(dashboard)/page.tsx",
+      "source_location": "L1",
+      "id": "dashboard_page_adminoverviewpage",
+      "community": 15,
+      "norm_label": "adminoverviewpage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/admin/(dashboard)/courses/page.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_dashboard_courses_page_tsx",
+      "community": 16,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "AdminCoursesPage()",
+      "file_type": "code",
+      "source_file": "src/app/admin/(dashboard)/courses/page.tsx",
+      "source_location": "L1",
+      "id": "courses_page_admincoursespage",
+      "community": 16,
+      "norm_label": "admincoursespage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/admin/(dashboard)/students/page.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_dashboard_students_page_tsx",
+      "community": 17,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "AdminStudentsPage()",
+      "file_type": "code",
+      "source_file": "src/app/admin/(dashboard)/students/page.tsx",
+      "source_location": "L1",
+      "id": "students_page_adminstudentspage",
+      "community": 17,
+      "norm_label": "adminstudentspage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/admin/(dashboard)/schedules/page.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_dashboard_schedules_page_tsx",
+      "community": 18,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "AdminSchedulesPage()",
+      "file_type": "code",
+      "source_file": "src/app/admin/(dashboard)/schedules/page.tsx",
+      "source_location": "L1",
+      "id": "schedules_page_adminschedulespage",
+      "community": 18,
+      "norm_label": "adminschedulespage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/admin/(dashboard)/content/page.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_dashboard_content_page_tsx",
+      "community": 19,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "AdminContentPage()",
+      "file_type": "code",
+      "source_file": "src/app/admin/(dashboard)/content/page.tsx",
+      "source_location": "L1",
+      "id": "content_page_admincontentpage",
+      "community": 19,
+      "norm_label": "admincontentpage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/admin/(dashboard)/settings/page.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_dashboard_settings_page_tsx",
+      "community": 20,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "AdminSettingsPage()",
+      "file_type": "code",
+      "source_file": "src/app/admin/(dashboard)/settings/page.tsx",
+      "source_location": "L1",
+      "id": "settings_page_adminsettingspage",
+      "community": 20,
+      "norm_label": "adminsettingspage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/admin/login/page.tsx",
+      "source_location": "L1",
+      "id": "src_app_admin_login_page_tsx",
+      "community": 21,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "AdminLoginPage()",
+      "file_type": "code",
+      "source_file": "src/app/admin/login/page.tsx",
+      "source_location": "L3",
+      "id": "login_page_adminloginpage",
+      "community": 21,
+      "norm_label": "adminloginpage()"
+    },
+    {
+      "label": "admin-login-form.tsx",
+      "file_type": "code",
+      "source_file": "src/components/admin/admin-login-form.tsx",
+      "source_location": "L1",
+      "id": "src_components_admin_admin_login_form_tsx",
+      "community": 22,
+      "norm_label": "admin-login-form.tsx"
+    },
+    {
+      "label": "handleSubmit()",
+      "file_type": "code",
+      "source_file": "src/components/admin/admin-login-form.tsx",
+      "source_location": "L19",
+      "id": "admin_admin_login_form_handlesubmit",
+      "community": 22,
+      "norm_label": "handlesubmit()"
+    },
+    {
+      "label": "admin-sidebar.tsx",
+      "file_type": "code",
+      "source_file": "src/components/admin/admin-sidebar.tsx",
+      "source_location": "L1",
+      "id": "src_components_admin_admin_sidebar_tsx",
+      "community": 26,
+      "norm_label": "admin-sidebar.tsx"
+    },
+    {
+      "label": "course-card.tsx",
+      "file_type": "code",
+      "source_file": "src/components/landing/course-card.tsx",
+      "source_location": "L1",
+      "id": "src_components_landing_course_card_tsx",
+      "community": 27,
+      "norm_label": "course-card.tsx"
+    },
+    {
+      "label": "landing-client.tsx",
+      "file_type": "code",
+      "source_file": "src/components/landing/landing-client.tsx",
+      "source_location": "L1",
+      "id": "src_components_landing_landing_client_tsx",
+      "community": 5,
+      "norm_label": "landing-client.tsx"
+    },
+    {
+      "label": "handleSelectCourse()",
+      "file_type": "code",
+      "source_file": "src/components/landing/landing-client.tsx",
+      "source_location": "L29",
+      "id": "landing_landing_client_handleselectcourse",
+      "community": 5,
+      "norm_label": "handleselectcourse()"
+    },
+    {
+      "label": "handleCloseForm()",
+      "file_type": "code",
+      "source_file": "src/components/landing/landing-client.tsx",
+      "source_location": "L35",
+      "id": "landing_landing_client_handlecloseform",
+      "community": 5,
+      "norm_label": "handlecloseform()"
+    },
+    {
+      "label": "handleOpenFormBlank()",
+      "file_type": "code",
+      "source_file": "src/components/landing/landing-client.tsx",
+      "source_location": "L41",
+      "id": "landing_landing_client_handleopenformblank",
+      "community": 5,
+      "norm_label": "handleopenformblank()"
+    },
+    {
+      "label": "registration-form.tsx",
+      "file_type": "code",
+      "source_file": "src/components/landing/registration-form.tsx",
+      "source_location": "L1",
+      "id": "src_components_landing_registration_form_tsx",
+      "community": 6,
+      "norm_label": "registration-form.tsx"
+    },
+    {
+      "label": "validate()",
+      "file_type": "code",
+      "source_file": "src/components/landing/registration-form.tsx",
+      "source_location": "L48",
+      "id": "landing_registration_form_validate",
+      "community": 6,
+      "norm_label": "validate()"
+    },
+    {
+      "label": "handleSubmit()",
+      "file_type": "code",
+      "source_file": "src/components/landing/registration-form.tsx",
+      "source_location": "L65",
+      "id": "landing_registration_form_handlesubmit",
+      "community": 6,
+      "norm_label": "handlesubmit()"
+    },
+    {
+      "label": "button.tsx",
+      "file_type": "code",
+      "source_file": "src/components/ui/button.tsx",
+      "source_location": "L1",
+      "id": "src_components_ui_button_tsx",
+      "community": 23,
+      "norm_label": "button.tsx"
+    },
+    {
+      "label": "cn()",
+      "file_type": "code",
+      "source_file": "src/components/ui/button.tsx",
+      "source_location": "L52",
+      "id": "ui_button_cn",
+      "community": 23,
+      "norm_label": "cn()"
+    },
+    {
+      "label": "getCourses server action",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts",
+      "source_location": "line 8",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "course-actions_getcourses",
+      "community": 0,
+      "norm_label": "getcourses server action"
+    },
+    {
+      "label": "getActiveCourses server action",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts",
+      "source_location": "line 19",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "course-actions_getactivecourses",
+      "community": 0,
+      "norm_label": "getactivecourses server action"
+    },
+    {
+      "label": "createCourse server action",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts",
+      "source_location": "line 31",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "course-actions_createcourse",
+      "community": 0,
+      "norm_label": "createcourse server action"
+    },
+    {
+      "label": "updateCourse server action",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts",
+      "source_location": "line 50",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "course-actions_updatecourse",
+      "community": 0,
+      "norm_label": "updatecourse server action"
+    },
+    {
+      "label": "deleteCourse server action",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts",
+      "source_location": "line 69",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "course-actions_deletecourse",
+      "community": 0,
+      "norm_label": "deletecourse server action"
+    },
+    {
+      "label": "generateWhatsAppURL registration action",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/actions/registration-actions.ts",
+      "source_location": "line 23",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "registration-actions_generatewhatsappurl",
+      "community": 4,
+      "norm_label": "generatewhatsappurl registration action"
+    },
+    {
+      "label": "verifyHCaptcha function",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/actions/registration-actions.ts",
+      "source_location": "line 9",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "registration-actions_verifyhcaptcha",
+      "community": 4,
+      "norm_label": "verifyhcaptcha function"
+    },
+    {
+      "label": "logout server action",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/actions/auth-actions.ts",
+      "source_location": "line 6",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "auth-actions_logout",
+      "community": 0,
+      "norm_label": "logout server action"
+    },
+    {
+      "label": "cn className utility",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/utils.ts",
+      "source_location": "line 4",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "utils_cn",
+      "community": 28,
+      "norm_label": "cn classname utility"
+    },
+    {
+      "label": "formatCurrency IDR formatter",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/utils.ts",
+      "source_location": "line 8",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "utils_formatcurrency",
+      "community": 7,
+      "norm_label": "formatcurrency idr formatter"
+    },
+    {
+      "label": "calculateFinalPrice discount calculator",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/utils.ts",
+      "source_location": "line 17",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "utils_calculatefinalprice",
+      "community": 7,
+      "norm_label": "calculatefinalprice discount calculator"
+    },
+    {
+      "label": "formatDiscountDisplay helper",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/utils.ts",
+      "source_location": "line 21",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "utils_formatdiscountdisplay",
+      "community": 7,
+      "norm_label": "formatdiscountdisplay helper"
+    },
+    {
+      "label": "generateWhatsAppURL utility",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/whatsapp.ts",
+      "source_location": "line 1",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "whatsapp_generatewhatsappurl",
+      "community": 4,
+      "norm_label": "generatewhatsappurl utility"
+    },
+    {
+      "label": "registrationFormSchema Zod schema",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/validations.ts",
+      "source_location": "line 3",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "validations_registrationformschema",
+      "community": 1,
+      "norm_label": "registrationformschema zod schema"
+    },
+    {
+      "label": "courseSchema Zod schema",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/validations.ts",
+      "source_location": "line 13",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "validations_courseschema",
+      "community": 0,
+      "norm_label": "courseschema zod schema"
+    },
+    {
+      "label": "studentSchema Zod schema",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/validations.ts",
+      "source_location": "line 24",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "validations_studentschema",
+      "community": 29,
+      "norm_label": "studentschema zod schema"
+    },
+    {
+      "label": "scheduleSchema Zod schema",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/validations.ts",
+      "source_location": "line 36",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "validations_scheduleschema",
+      "community": 1,
+      "norm_label": "scheduleschema zod schema"
+    },
+    {
+      "label": "PrismaClient singleton",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/db.ts",
+      "source_location": "line 14",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "db_prisma",
+      "community": 0,
+      "norm_label": "prismaclient singleton"
+    },
+    {
+      "label": "createClient Supabase factory",
+      "file_type": "code",
+      "source_file": "esk-platform/src/lib/auth.ts",
+      "source_location": "line 4",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "auth_createclient",
+      "community": 0,
+      "norm_label": "createclient supabase factory"
+    },
+    {
+      "label": "ActionResult discriminated union type",
+      "file_type": "code",
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 1",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "types_actionresult",
+      "community": 0,
+      "norm_label": "actionresult discriminated union type"
+    },
+    {
+      "label": "Course TypeScript type",
+      "file_type": "code",
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 7",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "types_course",
+      "community": 0,
+      "norm_label": "course typescript type"
+    },
+    {
+      "label": "Student TypeScript type",
+      "file_type": "code",
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 20",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "types_student",
+      "community": 1,
+      "norm_label": "student typescript type"
+    },
+    {
+      "label": "Schedule TypeScript type",
+      "file_type": "code",
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 33",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "types_schedule",
+      "community": 1,
+      "norm_label": "schedule typescript type"
+    },
+    {
+      "label": "Content TypeScript type",
+      "file_type": "code",
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 47",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "types_content",
+      "community": 9,
+      "norm_label": "content typescript type"
+    },
+    {
+      "label": "Admin TypeScript type",
+      "file_type": "code",
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 57",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "types_admin",
+      "community": 8,
+      "norm_label": "admin typescript type"
+    },
+    {
+      "label": "WhatsAppConfig TypeScript type",
+      "file_type": "code",
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 65",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "types_whatsappconfig",
+      "community": 4,
+      "norm_label": "whatsappconfig typescript type"
+    },
+    {
+      "label": "Course Prisma model",
+      "file_type": "code",
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 10",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "prisma_course",
+      "community": 0,
+      "norm_label": "course prisma model"
+    },
+    {
+      "label": "Student Prisma model",
+      "file_type": "code",
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 26",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "prisma_student",
+      "community": 1,
+      "norm_label": "student prisma model"
+    },
+    {
+      "label": "Schedule Prisma model",
+      "file_type": "code",
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 42",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "prisma_schedule",
+      "community": 1,
+      "norm_label": "schedule prisma model"
+    },
+    {
+      "label": "ScheduleStudent Prisma model",
+      "file_type": "code",
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 59",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "prisma_schedulestudent",
+      "community": 1,
+      "norm_label": "schedulestudent prisma model"
+    },
+    {
+      "label": "Content Prisma model",
+      "file_type": "code",
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 70",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "prisma_content",
+      "community": 9,
+      "norm_label": "content prisma model"
+    },
+    {
+      "label": "Admin Prisma model",
+      "file_type": "code",
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 80",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "prisma_admin",
+      "community": 8,
+      "norm_label": "admin prisma model"
+    },
+    {
+      "label": "WhatsAppConfig Prisma model",
+      "file_type": "code",
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 89",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "prisma_whatsappconfig",
+      "community": 4,
+      "norm_label": "whatsappconfig prisma model"
+    },
+    {
+      "label": "ModeAvailable enum",
+      "file_type": "code",
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 96",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "prisma_modeavailable",
+      "community": 0,
+      "norm_label": "modeavailable enum"
+    },
+    {
+      "label": "StudentMode enum",
+      "file_type": "code",
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 102",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "prisma_studentmode",
+      "community": 1,
+      "norm_label": "studentmode enum"
+    },
+    {
+      "label": "StudentStatus enum",
+      "file_type": "code",
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 107",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "prisma_studentstatus",
+      "community": 1,
+      "norm_label": "studentstatus enum"
+    },
+    {
+      "label": "ScheduleMode enum",
+      "file_type": "code",
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 113",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "prisma_schedulemode",
+      "community": 1,
+      "norm_label": "schedulemode enum"
+    },
+    {
+      "label": "ContentType enum",
+      "file_type": "code",
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 118",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "prisma_contenttype",
+      "community": 9,
+      "norm_label": "contenttype enum"
+    },
+    {
+      "label": "AdminRole enum",
+      "file_type": "code",
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 124",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "prisma_adminrole",
+      "community": 8,
+      "norm_label": "adminrole enum"
+    },
+    {
+      "label": "CourseCard",
+      "file_type": "code",
+      "source_file": "src/components/landing/course-card.tsx",
+      "source_location": null,
+      "id": "course-card",
+      "community": 2,
+      "norm_label": "coursecard"
+    },
+    {
+      "label": "LandingClient",
+      "file_type": "code",
+      "source_file": "src/components/landing/landing-client.tsx",
+      "source_location": null,
+      "id": "landing-client",
+      "community": 2,
+      "norm_label": "landingclient"
+    },
+    {
+      "label": "RegistrationForm",
+      "file_type": "code",
+      "source_file": "src/components/landing/registration-form.tsx",
+      "source_location": null,
+      "id": "registration-form",
+      "community": 2,
+      "norm_label": "registrationform"
+    },
+    {
+      "label": "AdminSidebar",
+      "file_type": "code",
+      "source_file": "src/components/admin/admin-sidebar.tsx",
+      "source_location": null,
+      "id": "admin-sidebar",
+      "community": 3,
+      "norm_label": "adminsidebar"
+    },
+    {
+      "label": "AdminLoginForm",
+      "file_type": "code",
+      "source_file": "src/components/admin/admin-login-form.tsx",
+      "source_location": null,
+      "id": "admin-login-form",
+      "community": 3,
+      "norm_label": "adminloginform"
+    },
+    {
+      "label": "useAuth hook",
+      "file_type": "code",
+      "source_file": "src/hooks/use-auth.tsx",
+      "source_location": null,
+      "id": "use-auth",
+      "community": 3,
+      "norm_label": "useauth hook"
+    },
+    {
+      "label": "AuthProvider",
+      "file_type": "code",
+      "source_file": "src/hooks/use-auth.tsx",
+      "source_location": null,
+      "id": "auth-provider",
+      "community": 3,
+      "norm_label": "authprovider"
+    },
+    {
+      "label": "LandingPage",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": null,
+      "id": "landing-page",
+      "community": 2,
+      "norm_label": "landingpage"
+    },
+    {
+      "label": "AuthMiddleware",
+      "file_type": "code",
+      "source_file": "middleware.ts",
+      "source_location": null,
+      "id": "middleware",
+      "community": 3,
+      "norm_label": "authmiddleware"
+    },
+    {
+      "label": "Course type",
+      "file_type": "code",
+      "source_file": "src/components/landing/landing-client.tsx",
+      "source_location": null,
+      "id": "course-type",
+      "community": 2,
+      "norm_label": "course type"
+    },
+    {
+      "label": "FormState type",
+      "file_type": "code",
+      "source_file": "src/components/landing/registration-form.tsx",
+      "source_location": null,
+      "id": "form-state-type",
+      "community": 2,
+      "norm_label": "formstate type"
+    },
+    {
+      "label": "User type",
+      "file_type": "code",
+      "source_file": "src/hooks/use-auth.tsx",
+      "source_location": null,
+      "id": "user-type",
+      "community": 3,
+      "norm_label": "user type"
+    },
+    {
+      "label": "generateWhatsAppURL action",
+      "file_type": "code",
+      "source_file": "src/lib/actions/registration-actions",
+      "source_location": null,
+      "id": "generate-whatsapp-url",
+      "community": 2,
+      "norm_label": "generatewhatsappurl action"
+    },
+    {
+      "label": "registrationFormSchema",
+      "file_type": "code",
+      "source_file": "src/lib/validations",
+      "source_location": null,
+      "id": "registration-form-schema",
+      "community": 2,
+      "norm_label": "registrationformschema"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "middleware.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "middleware_ts",
+      "target": "esk_platform_middleware_middleware",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/not-found.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_not_found_tsx",
+      "target": "app_not_found_notfound",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_app_page_tsx",
+      "target": "app_page_landingpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/admin/layout.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_admin_layout_tsx",
+      "target": "admin_layout_adminrootlayout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/admin/(dashboard)/layout.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_admin_dashboard_layout_tsx",
+      "target": "dashboard_layout_adminlayout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/admin/(dashboard)/page.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_app_admin_dashboard_page_tsx",
+      "target": "dashboard_page_adminoverviewpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/admin/(dashboard)/courses/page.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_app_admin_dashboard_courses_page_tsx",
+      "target": "courses_page_admincoursespage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/admin/(dashboard)/students/page.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_app_admin_dashboard_students_page_tsx",
+      "target": "students_page_adminstudentspage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/admin/(dashboard)/schedules/page.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_app_admin_dashboard_schedules_page_tsx",
+      "target": "schedules_page_adminschedulespage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/admin/(dashboard)/content/page.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_app_admin_dashboard_content_page_tsx",
+      "target": "content_page_admincontentpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/admin/(dashboard)/settings/page.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_app_admin_dashboard_settings_page_tsx",
+      "target": "settings_page_adminsettingspage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/admin/login/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_admin_login_page_tsx",
+      "target": "login_page_adminloginpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/admin/admin-login-form.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "src_components_admin_admin_login_form_tsx",
+      "target": "admin_admin_login_form_handlesubmit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/landing/landing-client.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "src_components_landing_landing_client_tsx",
+      "target": "landing_landing_client_handleselectcourse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/landing/landing-client.tsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "src_components_landing_landing_client_tsx",
+      "target": "landing_landing_client_handlecloseform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/landing/landing-client.tsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "src_components_landing_landing_client_tsx",
+      "target": "landing_landing_client_handleopenformblank",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/landing/registration-form.tsx",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "src_components_landing_registration_form_tsx",
+      "target": "landing_registration_form_validate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/landing/registration-form.tsx",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "src_components_landing_registration_form_tsx",
+      "target": "landing_registration_form_handlesubmit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/landing/registration-form.tsx",
+      "source_location": "L69",
+      "weight": 1.0,
+      "source": "landing_registration_form_handlesubmit",
+      "target": "landing_registration_form_validate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ui/button.tsx",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "src_components_ui_button_tsx",
+      "target": "ui_button_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts",
+      "source_location": "line 9",
+      "weight": 1.0,
+      "source": "course-actions_getcourses",
+      "target": "db_prisma"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts",
+      "source_location": "line 9",
+      "weight": 1.0,
+      "source": "course-actions_getcourses",
+      "target": "prisma_course"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts",
+      "source_location": "line 20",
+      "weight": 1.0,
+      "source": "course-actions_getactivecourses",
+      "target": "db_prisma"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts",
+      "source_location": "line 20",
+      "weight": 1.0,
+      "source": "course-actions_getactivecourses",
+      "target": "prisma_course"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts",
+      "source_location": "line 42",
+      "weight": 1.0,
+      "source": "course-actions_createcourse",
+      "target": "db_prisma"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts",
+      "source_location": "line 33",
+      "weight": 1.0,
+      "source": "course-actions_createcourse",
+      "target": "validations_courseschema"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts",
+      "source_location": "line 42",
+      "weight": 1.0,
+      "source": "course-actions_createcourse",
+      "target": "prisma_course"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 1",
+      "weight": 1.0,
+      "source": "types_actionresult",
+      "target": "course-actions_createcourse"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts",
+      "source_location": "line 61",
+      "weight": 1.0,
+      "source": "course-actions_updatecourse",
+      "target": "db_prisma"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts",
+      "source_location": "line 52",
+      "weight": 1.0,
+      "source": "course-actions_updatecourse",
+      "target": "validations_courseschema"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts",
+      "source_location": "line 61",
+      "weight": 1.0,
+      "source": "course-actions_updatecourse",
+      "target": "prisma_course"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 1",
+      "weight": 1.0,
+      "source": "types_actionresult",
+      "target": "course-actions_updatecourse"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts",
+      "source_location": "line 71",
+      "weight": 1.0,
+      "source": "course-actions_deletecourse",
+      "target": "db_prisma"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts",
+      "source_location": "line 71",
+      "weight": 1.0,
+      "source": "course-actions_deletecourse",
+      "target": "prisma_course"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 1",
+      "weight": 1.0,
+      "source": "types_actionresult",
+      "target": "course-actions_deletecourse"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/registration-actions.ts",
+      "source_location": "line 33",
+      "weight": 1.0,
+      "source": "registration-actions_generatewhatsappurl",
+      "target": "validations_registrationformschema"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/registration-actions.ts",
+      "source_location": "line 27",
+      "weight": 1.0,
+      "source": "registration-actions_verifyhcaptcha",
+      "target": "registration-actions_generatewhatsappurl"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/registration-actions.ts",
+      "source_location": "line 41",
+      "weight": 1.0,
+      "source": "registration-actions_generatewhatsappurl",
+      "target": "db_prisma"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "esk-platform/src/lib/actions/registration-actions.ts",
+      "source_location": "line 23",
+      "weight": 1.0,
+      "source": "registration-actions_generatewhatsappurl",
+      "target": "whatsapp_generatewhatsappurl"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/registration-actions.ts",
+      "source_location": "line 41",
+      "weight": 1.0,
+      "source": "registration-actions_generatewhatsappurl",
+      "target": "types_whatsappconfig"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 1",
+      "weight": 1.0,
+      "source": "types_actionresult",
+      "target": "registration-actions_generatewhatsappurl"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/auth-actions.ts",
+      "source_location": "line 7",
+      "weight": 1.0,
+      "source": "auth-actions_logout",
+      "target": "auth_createclient"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/auth-actions.ts",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "auth-actions_logout",
+      "target": "db_prisma"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 1",
+      "weight": 1.0,
+      "source": "types_actionresult",
+      "target": "auth-actions_logout"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/utils.ts",
+      "source_location": "line 18",
+      "weight": 1.0,
+      "source": "utils_calculatefinalprice",
+      "target": "utils_formatcurrency"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/utils.ts",
+      "source_location": "lines 26, 32",
+      "weight": 1.0,
+      "source": "utils_formatdiscountdisplay",
+      "target": "utils_formatcurrency"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/utils.ts",
+      "source_location": "line 33",
+      "weight": 1.0,
+      "source": "utils_calculatefinalprice",
+      "target": "utils_formatdiscountdisplay"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "esk-platform/src/lib/validations.ts",
+      "source_location": "line 3",
+      "weight": 1.0,
+      "source": "validations_registrationformschema",
+      "target": "prisma_student"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "esk-platform/src/lib/validations.ts",
+      "source_location": "line 13",
+      "weight": 1.0,
+      "source": "validations_courseschema",
+      "target": "prisma_course"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "esk-platform/src/lib/validations.ts",
+      "source_location": "line 36",
+      "weight": 1.0,
+      "source": "validations_scheduleschema",
+      "target": "prisma_schedule"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 7",
+      "weight": 1.0,
+      "source": "types_course",
+      "target": "prisma_course"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 17",
+      "weight": 1.0,
+      "source": "prisma_modeavailable",
+      "target": "types_course"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 20",
+      "weight": 1.0,
+      "source": "types_student",
+      "target": "prisma_student"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 31",
+      "weight": 1.0,
+      "source": "prisma_studentmode",
+      "target": "types_student"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 33",
+      "weight": 1.0,
+      "source": "prisma_studentstatus",
+      "target": "types_student"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 33",
+      "weight": 1.0,
+      "source": "types_schedule",
+      "target": "prisma_schedule"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 50",
+      "weight": 1.0,
+      "source": "prisma_schedulemode",
+      "target": "types_schedule"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 47",
+      "weight": 1.0,
+      "source": "types_content",
+      "target": "prisma_content"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 73",
+      "weight": 1.0,
+      "source": "prisma_contenttype",
+      "target": "types_content"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 57",
+      "weight": 1.0,
+      "source": "types_admin",
+      "target": "prisma_admin"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 84",
+      "weight": 1.0,
+      "source": "prisma_adminrole",
+      "target": "types_admin"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/types/index.ts",
+      "source_location": "line 65",
+      "weight": 1.0,
+      "source": "types_whatsappconfig",
+      "target": "prisma_whatsappconfig"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 38",
+      "weight": 1.0,
+      "source": "prisma_student",
+      "target": "prisma_course"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 55",
+      "weight": 1.0,
+      "source": "prisma_schedule",
+      "target": "prisma_course"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 39",
+      "weight": 1.0,
+      "source": "prisma_student",
+      "target": "prisma_schedulestudent"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/prisma/schema.prisma",
+      "source_location": "line 64",
+      "weight": 1.0,
+      "source": "prisma_schedulestudent",
+      "target": "prisma_schedule"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/landing/landing-client.tsx",
+      "source_location": "line 59-69",
+      "weight": 1.0,
+      "source": "landing-client",
+      "target": "course-card"
+    },
+    {
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/landing/course-card.tsx",
+      "source_location": "line 17-26",
+      "weight": 1.0,
+      "source": "course-card",
+      "target": "course-type"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "src/app/page.tsx",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "landing-page",
+      "target": "course-card"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/landing/landing-client.tsx",
+      "source_location": "line 86-90",
+      "weight": 1.0,
+      "source": "landing-client",
+      "target": "registration-form"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/landing/landing-client.tsx",
+      "source_location": "line 7-16",
+      "weight": 1.0,
+      "source": "landing-client",
+      "target": "course-type"
+    },
+    {
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/page.tsx",
+      "source_location": "line 3",
+      "weight": 1.0,
+      "source": "landing-client",
+      "target": "landing-page"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/landing/registration-form.tsx",
+      "source_location": "line 4",
+      "weight": 1.0,
+      "source": "registration-form",
+      "target": "registration-form-schema"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/landing/registration-form.tsx",
+      "source_location": "line 82",
+      "weight": 1.0,
+      "source": "registration-form",
+      "target": "generate-whatsapp-url"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/landing/registration-form.tsx",
+      "source_location": "line 15-21",
+      "weight": 1.0,
+      "source": "registration-form",
+      "target": "form-state-type"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/components/landing/registration-form.tsx",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "registration-form",
+      "target": "admin-login-form"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/admin/admin-sidebar.tsx",
+      "source_location": "line 3",
+      "weight": 1.0,
+      "source": "admin-sidebar",
+      "target": "use-auth"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": "src/components/admin/admin-sidebar.tsx",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "admin-sidebar",
+      "target": "admin-login-form"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "src/components/admin/admin-login-form.tsx",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "admin-login-form",
+      "target": "use-auth"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "src/components/admin/admin-login-form.tsx",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "admin-login-form",
+      "target": "auth-provider"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/hooks/use-auth.tsx",
+      "source_location": "line 24-26",
+      "weight": 1.0,
+      "source": "auth-provider",
+      "target": "use-auth"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/hooks/use-auth.tsx",
+      "source_location": "line 7-10",
+      "weight": 1.0,
+      "source": "auth-provider",
+      "target": "user-type"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "middleware.ts",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "middleware",
+      "target": "auth-provider"
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "prisma_schema_type_definitions_parity",
+      "label": "Prisma schema mirrors TypeScript types",
+      "nodes": [
+        "types_course",
+        "types_student",
+        "types_schedule",
+        "types_content",
+        "types_admin",
+        "types_whatsappconfig",
+        "prisma_course",
+        "prisma_student",
+        "prisma_schedule",
+        "prisma_content",
+        "prisma_admin",
+        "prisma_whatsappconfig"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/types/index.ts"
+    },
+    {
+      "id": "registration_flow_captcha_whatsapp",
+      "label": "Registration with captcha and WhatsApp notification",
+      "nodes": [
+        "registration-actions_verifyhcaptcha",
+        "registration-actions_generatewhatsappurl",
+        "validations_registrationformschema",
+        "types_whatsappconfig",
+        "prisma_whatsappconfig"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/registration-actions.ts"
+    },
+    {
+      "id": "price_calculation_utilities",
+      "label": "Price formatting and discount calculation utilities",
+      "nodes": [
+        "utils_formatcurrency",
+        "utils_calculatefinalprice",
+        "utils_formatdiscountdisplay"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/utils.ts"
+    },
+    {
+      "id": "course_crud_server_actions",
+      "label": "Course CRUD operations via server actions",
+      "nodes": [
+        "course-actions_getcourses",
+        "course-actions_getactivecourses",
+        "course-actions_createcourse",
+        "course-actions_updatecourse",
+        "course-actions_deletecourse",
+        "validations_courseschema",
+        "db_prisma",
+        "prisma_course"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/src/lib/actions/course-actions.ts"
+    },
+    {
+      "id": "many_to_many_student_schedule",
+      "label": "Student-Schedule many-to-many relationship",
+      "nodes": [
+        "prisma_student",
+        "prisma_schedule",
+        "prisma_schedulestudent"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "esk-platform/prisma/schema.prisma"
+    },
+    {
+      "id": "course_selection_flow",
+      "label": "Course Selection to Registration Flow",
+      "nodes": [
+        "landing-client",
+        "course-card",
+        "registration-form"
+      ],
+      "relation": "participates_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/landing/landing-client.tsx"
+    },
+    {
+      "id": "auth_context_pattern",
+      "label": "Auth Context Distribution Pattern",
+      "nodes": [
+        "auth-provider",
+        "use-auth",
+        "admin-sidebar"
+      ],
+      "relation": "participates_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/hooks/use-auth.tsx"
+    },
+    {
+      "id": "admin_auth_protection",
+      "label": "Admin Route Protection Pattern",
+      "nodes": [
+        "middleware",
+        "admin-login-form",
+        "auth-provider"
+      ],
+      "relation": "participates_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "middleware.ts"
+    }
+  ],
+  "built_at_commit": "4ec82c27b644d5ffb3c048a656fd439524871165"
+}

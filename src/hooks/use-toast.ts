@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react'
 
 type ToastType = 'success' | 'error' | 'info'
 
-type Toast = {
+export type Toast = {
   id: number
   message: string
   type: ToastType
