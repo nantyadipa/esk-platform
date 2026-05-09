@@ -1,0 +1,538 @@
+/*
+ * ============================================================
+ * DESIGN TOKENS — English Sepulang Kerja
+ * ============================================================
+ * Brand: English Sepulang Kerja (ESK)
+ * Tagline: "Jadwal Rapi, Mengajar Tenang"
+ * Primary: Rose Gold #B76E79
+ * Based on: Brand Guidelines Supplement v1.0.0
+ * Adapted for: ESK — scheduling & enrollment platform
+ * 
+ * Reference: This file works alongside the PRD Brand Identity
+ * section. PRD covers brand story, voice & tone, photography,
+ * and logo guidelines. This file covers CSS implementation tokens.
+ * ============================================================
+ */
+
+
+/* ============================================================
+   1. COLOR TOKENS
+   ============================================================ */
+:root {
+  /* --- Primary --- */
+  --color-primary:          #B76E79;   /* Rose Gold — main brand color */
+  --color-primary-dark:     #9A5964;   /* Deep Rose — hover, active */
+  --color-primary-light:    #D4949D;   /* Soft Rose Gold — badges, subtle highlights */
+  --color-primary-lighter:  #F5E1E4;   /* Light Rose — icon bg, soft tint */
+  --color-primary-ghost:    #FFF0EC;   /* Warm Blush — hover bg, subtle cards */
+  
+  /* --- Backgrounds --- */
+  --color-bg-page:          #FFF8F0;   /* Cream — default page background */
+  --color-bg-hero:          #FFF8F0;   /* Cream — hero section */
+  --color-bg-surface:       #FFFFFF;   /* White — card surfaces */
+  --color-bg-card:          #FFFFFF;   /* White — default card */
+  --color-bg-icon:          #F5E1E4;   /* Light Rose — icon wrapper bg */
+  --color-bg-tinted:        #FFF0EC;   /* Warm Blush — tinted card variant */
+  
+  /* --- Text --- */
+  --color-text-primary:     #2C2C2C;   /* Dark Gray — body text */
+  --color-text-secondary:   #6B7280;   /* Gray — muted text, labels */
+  --color-text-muted:       #9CA3AF;   /* Light Gray — placeholders */
+  --color-text-accent:      #B76E79;   /* Rose Gold — accent text */
+  --color-text-on-primary:  #FFFFFF;   /* White — text on Rose Gold bg */
+  
+  /* --- Borders --- */
+  --color-border:           #F0E0E3;   /* Warm Gray — default borders */
+  --color-border-strong:    #D4B0B8;   /* Medium Rose — active borders, focus */
+  --color-border-subtle:    #F5EDEA;   /* Very light warm — dividers */
+  
+  /* --- Semantic / States --- */
+  --color-success:          #B8D8D1;   /* Soft Mint — confirmation, available */
+  --color-success-dark:     #7FB8A8;   /* Darker mint — success text */
+  --color-warning:          #F4C4A6;   /* Soft Peach — nearly-full, pending */
+  --color-warning-dark:     #D4976B;   /* Darker peach — warning text */
+  --color-error:            #E8B4B8;   /* Soft Rose — errors */
+  --color-error-dark:       #C47E84;   /* Darker rose — error text on light bg */
+  
+  /* --- Gradients --- */
+  --gradient-hero: linear-gradient(180deg, #FFF8F0 0%, #FFF0EC 60%, #FFFFFF 100%);
+  --gradient-card: linear-gradient(135deg, #FFFFFF 0%, #FFF0EC 100%);
+  --gradient-cta:  linear-gradient(135deg, #B76E79 0%, #9A5964 100%);
+}
+
+
+/* ============================================================
+   2. FONT TOKENS
+   ============================================================ */
+:root {
+  /* --- Font Families --- */
+  --font-display: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-body:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Courier New', monospace;
+  
+  /* --- Heading Scale (use --font-display) --- */
+  --text-hero:   clamp(40px, 6vw, 64px) / 1.1  var(--font-display);
+  --text-h1:     48px / 1.15  var(--font-display);
+  --text-h2:     32px / 1.2   var(--font-display);
+  --text-h3:     22px / 1.3   var(--font-display);
+  
+  /* --- Body Scale (use --font-body) --- */
+  --text-body-lg: 18px / 1.7  var(--font-body);
+  --text-body:    16px / 1.6  var(--font-body);
+  --text-sm:      14px / 1.5  var(--font-body);
+  --text-xs:      12px / 1.4  var(--font-body);
+}
+
+/* Font pairing rules:
+   ALWAYS use --font-display for: h1, h2, h3, .hero-title, .section-title
+   ALWAYS use --font-body for: p, li, label, input, button, span, .badge
+   NEVER mix fonts within the same text node
+   NEVER use Plus Jakarta Sans below 16px
+*/
+
+
+/* ============================================================
+   3. SPACING TOKENS (8px Grid)
+   ============================================================ */
+:root {
+  /* --- Base Scale --- */
+  --sp-0:    0px;
+  --sp-1:    4px;     /* micro — icon gaps, tight padding */
+  --sp-2:    8px;     /* xs — inline element gaps */
+  --sp-3:   12px;     /* sm — label to input */
+  --sp-4:   16px;     /* md — default padding, card internal */
+  --sp-5:   24px;     /* lg — card padding, section sub-gap */
+  --sp-6:   32px;     /* xl — between related groups */
+  --sp-7:   48px;     /* 2xl — section internal spacing */
+  --sp-8:   64px;     /* 3xl — section to section gap */
+  --sp-9:   80px;     /* 4xl — hero padding, page sections */
+  --sp-10: 120px;     /* 5xl — top-level page breathing room */
+  
+  /* --- Semantic Spacing --- */
+  --spacing-component-xs:   var(--sp-2);    /* 8px  — tight components */
+  --spacing-component-sm:   var(--sp-4);     /* 16px — default component gap */
+  --spacing-component-md:   var(--sp-5);     /* 24px — comfortable component gap */
+  --spacing-component-lg:   var(--sp-6);     /* 32px — section sub-divisions */
+  --spacing-section-sm:     var(--sp-7);     /* 48px — tight sections */
+  --spacing-section-md:     var(--sp-8);     /* 64px — default sections */
+  --spacing-section-lg:     var(--sp-9);     /* 80px — generous sections */
+  --spacing-page:           var(--sp-10);    /* 120px — page-level padding */
+  --spacing-gap-tight:      var(--sp-2);     /* 8px  — icon + label */
+  --spacing-gap-default:    var(--sp-3);     /* 12px — button icon + text */
+  --spacing-gap-loose:      var(--sp-4);     /* 16px — card header elements */
+}
+
+/* Spacing rules:
+   ✅ All padding/margin values MUST be multiples of 4px
+   ✅ All gap values between components MUST be multiples of 8px
+   ✅ Section vertical padding MUST use --spacing-section-* tokens
+   ❌ Never use arbitrary px values like 13px, 17px, 22px
+   ❌ Never use rem — use px tokens only for predictability
+*/
+
+
+/* ============================================================
+   4. GRID SYSTEM
+   ============================================================ */
+:root {
+  --grid-container-max:   1100px;
+  --grid-container-pad:   var(--sp-5);     /* 24px side padding */
+  --grid-1: repeat(1, 1fr);
+  --grid-2: repeat(2, 1fr);
+  --grid-3: repeat(3, 1fr);
+  --grid-4: repeat(4, 1fr);
+  --grid-gap-sm: var(--sp-3);    /* 12px */
+  --grid-gap-md: var(--sp-4);    /* 16px — default */
+  --grid-gap-lg: var(--sp-5);    /* 24px */
+}
+
+
+/* ============================================================
+   5. SHADOW TOKENS
+   ============================================================ */
+:root {
+  --shadow-none:    none;
+  --shadow-xs:      0 1px 2px rgba(183,110,121,0.04);
+  --shadow-sm:      0 1px 3px rgba(183,110,121,0.06), 0 1px 2px  rgba(0,0,0,0.04);
+  --shadow-md:      0 4px 16px rgba(183,110,121,0.10), 0 2px 6px  rgba(0,0,0,0.04);
+  --shadow-lg:      0 8px 32px rgba(183,110,121,0.14), 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-xl:      0 16px 48px rgba(183,110,121,0.18),0 8px 20px rgba(0,0,0,0.08);
+  --shadow-cta:     0 4px 20px rgba(183,110,121,0.35);
+  --shadow-cta-lg:  0 8px 32px rgba(183,110,121,0.45);
+  --shadow-focus:   0 0 0 3px rgba(183,110,121,0.25);
+  --shadow-inset:   inset 0 1px 3px rgba(0,0,0,0.06);
+}
+
+
+/* ============================================================
+   6. BUTTON STYLES
+   ============================================================ */
+
+/* --- PRIMARY — Main call-to-action --- */
+.btn-primary {
+  background:    #B76E79;
+  color:         #FFFFFF;
+  border:        none;
+  border-radius: 9999px;
+  padding:       14px 28px;
+  font-family:   var(--font-body);
+  font-size:     15px;
+  font-weight:   600;
+  letter-spacing: 0.01em;
+  box-shadow:    0 4px 20px rgba(183,110,121,0.35);
+  cursor:        pointer;
+  display:       inline-flex;
+  align-items:   center;
+  gap:           8px;
+  transition:    all 250ms ease;
+}
+
+.btn-primary:hover {
+  background:  #9A5964;
+  box-shadow:  0 6px 28px rgba(183,110,121,0.45);
+  transform:   translateY(-2px);
+}
+
+.btn-primary:active {
+  transform:   translateY(0px);
+  box-shadow:  0 2px 8px rgba(183,110,121,0.25);
+}
+
+.btn-primary:focus-visible {
+  outline:        2px solid #B76E79;
+  outline-offset: 3px;
+}
+
+.btn-primary:disabled {
+  opacity:        0.4;
+  cursor:         not-allowed;
+  transform:      none;
+  box-shadow:     none;
+}
+
+/* --- SECONDARY — Supporting action --- */
+.btn-secondary {
+  background:    transparent;
+  color:         #B76E79;
+  border:        2px solid #B76E79;
+  border-radius: 9999px;
+  padding:       12px 26px;
+  font-family:   var(--font-body);
+  font-size:     15px;
+  font-weight:   600;
+  cursor:        pointer;
+  display:       inline-flex;
+  align-items:   center;
+  gap:           8px;
+  transition:    all 250ms ease;
+}
+
+.btn-secondary:hover {
+  background:  #FFF0EC;
+  border-color: #9A5964;
+  color:        #9A5964;
+  transform:    translateY(-1px);
+}
+
+.btn-secondary:active {
+  transform:   translateY(0);
+  background:  #F5E1E4;
+}
+
+/* --- GHOST — Subtle / tertiary action --- */
+.btn-ghost {
+  background:    transparent;
+  color:         #6B7280;
+  border:        none;
+  border-radius: 9999px;
+  padding:       12px 20px;
+  font-family:   var(--font-body);
+  font-size:     14px;
+  font-weight:   500;
+  cursor:        pointer;
+  display:       inline-flex;
+  align-items:   center;
+  gap:           6px;
+  transition:    all 200ms ease;
+}
+
+.btn-ghost:hover {
+  background:  #FFF0EC;
+  color:       #B76E79;
+}
+
+/* --- ICON-ONLY — Compact icon button --- */
+.btn-icon {
+  background:    transparent;
+  border:        1px solid #F0E0E3;
+  border-radius: 50%;
+  width:         40px;
+  height:        40px;
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  color:         #6B7280;
+  cursor:        pointer;
+  transition:    all 200ms ease;
+}
+
+.btn-icon:hover {
+  background:   #FFF0EC;
+  color:        #B76E79;
+  border-color: #B76E79;
+}
+
+/* --- Button Sizes --- */
+.btn-sm  { padding: 8px 18px;  font-size: 13px; }
+.btn-md  { padding: 14px 28px; font-size: 15px; }  /* default */
+.btn-lg  { padding: 18px 36px; font-size: 17px; }
+
+/* --- Button with Icon Pattern ---
+   [Icon]  Label Text        ← icon LEFT: navigation, filter
+   Label Text  [Icon →]      ← icon RIGHT: CTA, next step (preferred for primary)
+*/
+
+
+/* ============================================================
+   7. CARD STYLES
+   ============================================================ */
+
+/* --- BASE CARD --- */
+.card {
+  background:    #FFFFFF;
+  border:        1px solid #F0E0E3;
+  border-radius: 16px;
+  padding:       24px;
+  box-shadow:    var(--shadow-sm);
+  transition:    box-shadow 250ms ease, transform 250ms ease;
+}
+
+.card:hover {
+  box-shadow:  var(--shadow-md);
+  transform:   translateY(-2px);
+}
+
+/* --- FEATURE CARD --- */
+.card-feature {
+  background:    #FFFFFF;
+  border:        1px solid #F0E0E3;
+  border-radius: 16px;
+  padding:       20px 16px;
+  text-align:    center;
+  box-shadow:    var(--shadow-xs);
+}
+
+/* --- SECTION CARD (course list items) --- */
+.card-section {
+  background:    #FFFFFF;
+  border:        1px solid #F0E0E3;
+  border-radius: 20px;
+  padding:       24px 28px;
+  display:       flex;
+  align-items:   flex-start;
+  gap:           20px;
+  box-shadow:    var(--shadow-sm);
+  transition:    all 250ms ease;
+}
+
+.card-section:hover {
+  border-color: #B76E79;
+  box-shadow:   var(--shadow-md);
+  transform:    translateY(-2px);
+}
+
+/* --- ELEVATED CARD (highlighted/featured content) --- */
+.card-elevated {
+  background:    #FFFFFF;
+  border:        1px solid #D4B0B8;
+  border-radius: 20px;
+  padding:       32px;
+  box-shadow:    var(--shadow-lg);
+}
+
+/* --- TINTED CARD (soft warm background) --- */
+.card-tinted {
+  background:    #FFF0EC;
+  border:        1px solid #F0E0E3;
+  border-radius: 16px;
+  padding:       24px;
+  box-shadow:    none;
+}
+
+/* Card rules:
+   ✅ ALL cards must have border: 1px solid var(--color-border)
+   ✅ ALL interactive cards must have :hover with translateY(-2px)
+   ✅ Shadow tint color MUST be based on Rose Gold rgba(183,110,121,x), never gray
+   ✅ Border-radius MUST be minimum 16px for cards
+   ❌ Never use gray box-shadow on this brand
+   ❌ Never use border-radius below 12px on cards
+*/
+
+
+/* ============================================================
+   8. BORDER RADIUS TOKENS
+   ============================================================ */
+:root {
+  --radius-sm:    8px;     /* badges, tags */
+  --radius-md:    12px;    /* inputs, small containers */
+  --radius-lg:    16px;    /* cards (minimum) */
+  --radius-xl:    20px;    /* large cards, modals */
+  --radius-full:  9999px;  /* pills, buttons, avatars */
+}
+
+
+/* ============================================================
+   9. MICRO-INTERACTIONS & ANIMATION
+   ============================================================ */
+
+/* --- Animation Principles ---
+   1. PURPOSE — every animation communicates something (state change, attention, feedback)
+   2. SPEED — fast enough not to block, slow enough to be perceived
+   3. SUBTLETY — enhance, never distract
+   4. CONSISTENCY — same element type = same animation
+*/
+
+/* --- Duration & Easing Tokens --- */
+:root {
+  /* Durations */
+  --duration-instant:  100ms;   /* state flips, toggles */
+  --duration-fast:     150ms;   /* hover in */
+  --duration-base:     250ms;   /* hover out, most transitions */
+  --duration-moderate: 350ms;   /* cards, panels appearing */
+  --duration-slow:     500ms;   /* page sections, hero entrance */
+  --duration-xslow:    700ms;   /* splash, onboarding */
+  
+  /* Easing */
+  --ease-out:      cubic-bezier(0.0, 0.0, 0.2, 1.0);   /* elements entering */
+  --ease-in:       cubic-bezier(0.4, 0.0, 1.0, 1.0);   /* elements leaving */
+  --ease-in-out:   cubic-bezier(0.4, 0.0, 0.2, 1.0);   /* position changes */
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);  /* bouncy CTA, success */
+  --ease-linear:   linear;                                 /* progress bars, loaders */
+}
+
+/* --- Button transitions --- */
+/*
+  transition: background var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out),
+              transform   var(--duration-base) var(--ease-out);
+  :hover  → translateY(-2px), shadow increase
+  :active → translateY(0), shadow compress, scale(0.98)
+  :focus  → box-shadow: var(--shadow-focus)
+*/
+
+/* --- Card hover lift --- */
+/*
+  transition: transform var(--duration-base) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+  :hover → translateY(-4px), --shadow-md, border tint toward primary
+*/
+
+/* --- Page Load / Section Entrance --- */
+@keyframes fadeSlideUp {
+  from {
+    opacity:   0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity:   1;
+    transform: translateY(0);
+  }
+}
+
+/* Staggered entrance for course section cards */
+.section-card:nth-child(1) { animation: fadeSlideUp 500ms var(--ease-out) 0ms   both; }
+.section-card:nth-child(2) { animation: fadeSlideUp 500ms var(--ease-out) 80ms  both; }
+.section-card:nth-child(3) { animation: fadeSlideUp 500ms var(--ease-out) 160ms both; }
+.section-card:nth-child(4) { animation: fadeSlideUp 500ms var(--ease-out) 240ms both; }
+
+/* --- Badge Pulse (for "New" or "Discount" badge) --- */
+@keyframes subtlePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(183, 110, 121, 0.0); }
+  50%       { box-shadow: 0 0 0 6px rgba(183, 110, 121, 0.08); }
+}
+.badge-highlight {
+  animation: subtlePulse 3s var(--ease-in-out) infinite;
+}
+
+/* --- Completion checkmark animation --- */
+@keyframes checkDraw {
+  from { stroke-dashoffset: 24; }
+  to   { stroke-dashoffset: 0; }
+}
+.check-icon path {
+  stroke-dasharray:  24;
+  stroke-dashoffset: 24;
+  animation: checkDraw 300ms var(--ease-spring) forwards;
+}
+
+/* --- Reduced Motion (always include — accessibility) --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration:   0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration:  0.01ms !important;
+    scroll-behavior:      auto !important;
+  }
+}
+
+
+/* ============================================================
+   10. LOGO GUIDELINES (CSS)
+   ============================================================ */
+
+/*
+  Logomark: "ESK" monogram circle
+  - Background: #B76E79 (Rose Gold)
+  - Letters: #FFFFFF (white), font-weight: 800, font-family: Inter
+  - Size ratio: letters occupy ~55% of circle diameter
+  - Minimum size: 24×24px (digital), 8mm (print)
+  
+  Logo Variants:
+  - Full (mark + wordmark): header, about page, documents
+  - Mark only (ESK circle): favicon, avatar, app icon, small spaces
+  - Wordmark only: footer text links, breadcrumbs
+  - Monochrome dark: dark backgrounds — white mark + white wordmark
+  - Monochrome light: light/white bg — full color mark + dark wordmark
+  
+  Clear Space: minimum 1× the height of the "ESK" circle around logo
+  
+  Logo DON'Ts:
+  ❌ Do not recolor the "ESK" mark to anything other than #B76E79 or white
+  ❌ Do not stretch or distort proportions
+  ❌ Do not add drop shadow to the logomark
+  ❌ Do not place on a busy photographic background without overlay
+  ❌ Do not use font other than Inter for the monogram
+*/
+
+
+/* ============================================================
+   QUICK-REFERENCE CARD
+   ============================================================ */
+
+/*
+  BRAND: English Sepulang Kerja (ESK)
+  ─────────────────────────────────────────────────────────
+  PRIMARY COLOR:    #B76E79  (Rose Gold)
+  PRIMARY DARK:     #9A5964  (CTA hover)
+  PRIMARY LIGHT:    #D4949D  (accents on light bg)
+  BG DEFAULT:       #FFF8F0  (Cream)
+  TEXT PRIMARY:     #2C2C2C
+  TEXT SECONDARY:   #6B7280
+  BORDER:           #F0E0E3
+
+  FONT DISPLAY:     Plus Jakarta Sans (600, 700, 800)
+  FONT BODY:        Inter (400, 500, 600)
+
+  BASE GRID:        8px
+  BORDER-RADIUS:    Pill=9999px | Card=16–20px | Badge=8px
+  TRANSITION:       250ms ease (default)
+
+  LOGO MARK:        "ESK" white on #B76E79 circle, 36×36px
+  ICON STYLE:       Lucide outline, stroke 1.5px, --icon-md=20px
+  SHADOW TINT:      Always Rose Gold-based rgba(183,110,121,x)
+  DARK BG:          Not included in MVP (light mode only)
+  ─────────────────────────────────────────────────────────
+*/

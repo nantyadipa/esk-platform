@@ -1,0 +1,291 @@
+# ESK Platform — Features & Functionality Overview
+
+**Version:** 2.0.0  
+**Last Updated:** 2026-05-09  
+
+---
+
+## Table of Contents
+
+1. [Landing Page (Public)](#1-landing-page-public)
+2. [Admin Authentication](#2-admin-authentication)
+3. [Admin Dashboard — Courses](#3-admin-dashboard--courses)
+4. [Admin Dashboard — Students](#4-admin-dashboard--students)
+5. [Admin Dashboard — Schedules](#5-admin-dashboard--schedules)
+6. [Admin Dashboard — Content (CMS)](#6-admin-dashboard--content-cms)
+7. [Admin Dashboard — Settings](#7-admin-dashboard--settings)
+8. [Shared UX Patterns](#8-shared-ux-patterns)
+9. [API Layer](#9-api-layer)
+10. [Database](#10-database)
+11. [Bugfixes & Improvements](#11-bugfixes--improvements)
+
+---
+
+## 1. Landing Page (Public)
+
+### 1.1 Hero Section
+- Sticky navigation bar dengan logo ESK dan CTA "Lihat Kelas"
+- Hero heading & subtitle yang editable via CMS
+- Tombol CTA utama menuju section harga kelas
+- Responsive: text size scales dari `text-4xl` ke `text-5xl` di desktop
+
+### 1.2 Course Listing ("Harga & Kelas")
+- Grid responsive: 1 kolom (mobile) → 2 kolom (tablet) → 3 kolom (desktop)
+- Setiap kartu menampilkan:
+  - Nama kursus + badge mode
+  - Deskripsi singkat
+  - Jumlah pertemuan
+  - Harga dengan logika diskon:
+    - `discountRate = 0` → hanya tampilkan base price
+    - `0 < discountRate < 1` → strikethrough base price + harga final + badge "X% OFF" (pulse animation)
+    - `discountRate >= 1` → strikethrough base price + teks "Gratis"
+  - Tombol "Daftar Sekarang" (terhubung ke form modal)
+
+### 1.3 Registration Form Modal
+- Trigger: klik "Daftar Sekarang" di kartu kursus atau tombol global
+- Field form:
+  - Nama Lengkap (validasi: tidak kosong)
+  - No. WhatsApp (validasi: min 8, max 15 karakter)
+  - Kelas (dropdown dari database; read-only jika dipilih dari kartu)
+  - Mode (radio: Online / Offline)
+  - Kode Referral (opsional)
+- Validasi real-time (Zod)
+- hCaptcha verification (server-side, configurable)
+- Submit → generate `wa.me` URL → buka WhatsApp di tab baru → tutup modal
+
+### 1.4 Footer
+- Teks copyright yang editable via CMS
+
+### 1.5 ISR / CMS Update
+- Landing page menggunakan `revalidate = 300` (5 menit)
+- Setiap update di admin dashboard memanggil `revalidatePath('/')`
+- Konten editable: hero_title, hero_subtitle, hero_cta_text, footer_copyright
+
+---
+
+## 2. Admin Authentication
+
+### 2.1 Login Page
+- URL: `/admin/login`
+- Form: Email + Password
+- Loading spinner saat submit
+- Error message: "Email atau password salah. Coba lagi ya."
+- Integrasi: Supabase Auth (`signInWithPassword`)
+
+### 2.2 Route Protection
+- Middleware (`middleware.ts`) memproteksi semua `/admin/*`
+- Redirect ke `/admin/login?redirect=<path>` jika tidak terautentikasi
+- Session via Supabase cookie (server-side + client-side)
+
+### 2.3 Auth Context (`use-auth.tsx`)
+- React Context menyimpan state user (id, email)
+- Auto-detect session saat mount
+- Listen auth state changes
+- Method `signOut()` → hapus session + redirect ke login
+
+---
+
+## 3. Admin Dashboard — Courses
+
+### 3.1 Course List Table
+- Kolom: Kursus, Harga, Pertemuan, Mode, Status, Aksi
+- Badge mode: Online (blue), Offline (orange), Both (primary)
+- Badge status: Aktif (green) / Nonaktif (red)
+- Aksi per baris: Edit (icon pensil), Delete (icon sampah)
+
+### 3.2 Add / Edit Course Modal
+- Form fields:
+  - Nama Kursus
+  - Deskripsi (textarea)
+  - Harga Dasar (number, Rp)
+  - Diskon % (0–100, auto-convert ke 0–1 decimal)
+  - Jumlah Pertemuan (number, min 1)
+  - Mode (select: Online & Offline / Online / Offline)
+  - Toggle Aktif/Nonaktif (switch)
+- Validasi Zod real-time
+- Loading state: spinner + "Menyimpan..."
+- Setelah submit: reload halaman untuk refresh data
+
+### 3.3 Delete Course
+- Konfirmasi modal: "Hapus Kursus? Tindakan ini tidak dapat dibatalkan."
+- Tombol konfirmasi dengan loading spinner: "Menghapus..."
+- Tombol Batal disabled saat proses
+- **Business Logic:** Sebelum hapus kursus:
+  1. Update semua siswa yang terdaftar → `selectedCourseId = null`
+  2. Hapus semua jadwal terkait
+  3. Hapus kursus
+- Toast: "Kursus berhasil dihapus" atau "Gagal menghapus kursus"
+
+---
+
+## 4. Admin Dashboard — Students
+
+### 4.1 Student List Table
+- Kolom: Nama, Kursus, Mode, Status, Referral, Aksi
+- Filter bar:
+  - Search (nama atau no. HP)
+  - Filter Kursus (dropdown)
+  - Filter Status (dropdown: Aktif / Tidak Aktif / Trial)
+- Badge status: Aktif (green), Tidak Aktif (red), Trial (yellow)
+
+### 4.2 Add / Edit Student Modal
+- Form fields:
+  - Nama Lengkap
+  - No. WhatsApp
+  - Kursus (dropdown, opsional)
+  - Mode (Online / Offline)
+  - Status (Aktif / Tidak Aktif / Trial)
+  - Kode Referral (opsional)
+  - Catatan (opsional)
+- Validasi Zod + loading state
+
+### 4.3 Delete Student
+- Konfirmasi modal + loading state + toast notification
+
+---
+
+## 5. Admin Dashboard — Schedules
+
+### 5.1 Calendar View (FullCalendar)
+- Kalender bulanan interaktif
+- Event berwarna unik per kursus (10 warna palette)
+- Filter kursus (dropdown di header)
+- Klik tanggal kosong → modal tambah jadwal
+- Klik event → modal edit jadwal
+
+### 5.2 Add / Edit Schedule Modal
+- Form fields:
+  - Kursus (dropdown)
+  - No. Pertemuan (number)
+  - Tanggal (date picker)
+  - Waktu Mulai & Selesai (time picker, validasi end > start)
+  - Zoom Link (opsional)
+  - Mode (radio: Online / Offline)
+  - Siswa (checkbox list dari siswa aktif)
+  - Catatan (opsional)
+- Validasi: semua field wajib kecuali opsional
+- Tombol "Hapus" hanya muncul saat edit
+
+### 5.3 Delete Schedule
+- Konfirmasi overlay di dalam modal
+- Loading state + toast notification
+
+---
+
+## 6. Admin Dashboard — Content (CMS)
+
+### 6.1 Content Sections
+Editable sections (per section punya tombol simpan sendiri):
+- **Judul Hero** (`hero_title`) — text input
+- **Subtitle Hero** (`hero_subtitle`) — textarea
+- **Teks Tombol Hero** (`hero_cta_text`) — text input
+- **Teks Footer** (`footer_copyright`) — text input
+
+### 6.2 Save Behavior
+- Save per section (bukan global)
+- Inline success indicator: "Tersimpan ✓" (2 detik)
+- Loading state: "Menyimpan..."
+
+---
+
+## 7. Admin Dashboard — Settings
+
+### 7.1 WhatsApp Configuration
+- No. WhatsApp Admin (wajib, format: 6281234567890)
+- Template Pesan (opsional)
+- Placeholder support: `{name}`, `{phone}`, `{course}`, `{mode}`
+- Inline success indicator
+
+### 7.2 Admin Profile
+- Email (read-only)
+- Password Baru (opsional)
+- Konfirmasi Password
+
+### 7.3 Danger Zone
+- Tombol "Hapus Semua Data Siswa" dengan alert konfirmasi sederhana
+
+---
+
+## 8. Shared UX Patterns
+
+### 8.1 Toast Notifications (`use-toast.ts` + `ToastContainer`)
+- Posisi: fixed bottom-right
+- Tipe:
+  - Success → background green (`bg-green-600`)
+  - Error → background red (`bg-red-600`)
+  - Info → background gray (`bg-gray-800`)
+- Auto-dismiss: 4 detik
+- Muncul untuk: semua aksi delete sukses/gagal, error API
+
+### 8.2 Loading States
+- Semua tombol aksi punya loading state dengan spinner SVG
+- Spinner menggunakan `animate-spin` Tailwind
+- Tombol disabled (`disabled:opacity-60`) saat loading
+- Tombol "Batal" juga disabled saat form submitting
+- Delete icon di list berubah jadi spinner saat proses
+
+### 8.3 Sidebar Active Highlight
+- Menggunakan `usePathname()` dari Next.js
+- Menu aktif: background `color-primary-ghost` + font bold + accent text
+- Menu non-aktif: hover effect saja
+- Overview (`/admin`) di-highlight hanya saat exact match
+
+### 8.4 Cursor Pointer
+- Semua `<button>` di seluruh aplikasi memiliki class `cursor-pointer`
+- Hand cursor muncul saat hover
+
+---
+
+## 9. API Layer
+
+### 9.1 RESTful Endpoints
+Semua API routes mengembalikan JSON dengan format konsisten:
+- Sukses: `{ id: string }` atau `{ success: true }`
+- Error: `{ error: string }` dengan HTTP status code
+
+### 9.2 Validation
+- Semua request body divalidasi menggunakan Zod schema
+- Error Zod → HTTP 400 "Data tidak valid"
+- Error server → HTTP 500 dengan pesan spesifik
+
+### 9.3 Revalidation
+- Setiap mutasi (POST/PUT/DELETE) memanggil `revalidatePath('/')`
+- Landing page otomatis refresh konten dalam <5 detik
+
+---
+
+## 10. Database
+
+### 10.1 PostgreSQL (Supabase)
+ORM: Prisma dengan generator `prisma-client`
+
+### 10.2 Key Tables
+| Table | Purpose |
+|-------|---------|
+| `Course` | Katalog kursus dengan harga, diskon, mode |
+| `Student` | Data siswa dengan relasi ke kursus |
+| `Schedule` | Jadwal pertemuan dengan relasi ke kursus |
+| `ScheduleStudent` | Junction table jadwal ↔ siswa (Many-to-Many) |
+| `Content` | CMS konten landing page |
+| `Admin` | Data admin untuk autentikasi |
+| `WhatsAppConfig` | Konfigurasi WhatsApp admin |
+
+### 10.3 Cascading Behavior
+- Hapus `Schedule` → hapus `ScheduleStudent` terkait (implicit via Prisma)
+- Hapus `Course` → manual: set `Student.selectedCourseId = null`, hapus `Schedule`, baru hapus `Course`
+
+---
+
+## 11. Bugfixes & Improvements
+
+| ID | Deskripsi | File Terkait | Tanggal |
+|----|-----------|--------------|---------|
+| [BF-001](bugfixes/BF-001-course-deletion-foreign-key.md) | Fix: tidak bisa menghapus course karena foreign key constraint | `api/courses/[id]/route.ts` | 2026-05-09 |
+| [BF-002](bugfixes/BF-002-toast-notifications.md) | Tambah toast notification untuk semua aksi delete | `hooks/use-toast.ts`, `components/ui/toast-container.tsx`, 3 admin pages | 2026-05-09 |
+| [BF-003](bugfixes/BF-003-loading-states.md) | Tambah loading state pada semua tombol aksi CRUD | 3 admin pages | 2026-05-09 |
+| [BF-004](bugfixes/BF-004-sidebar-active-highlight.md) | Tambah highlight menu aktif di sidebar admin | `components/admin/admin-sidebar.tsx` | 2026-05-09 |
+| [BF-005](bugfixes/BF-005-cursor-pointer.md) | Tambah cursor pointer pada semua elemen button | 8+ files | 2026-05-09 |
+
+---
+
+*End of Feature Overview*
