@@ -65,22 +65,22 @@ export default async function LandingPage() {
         </div>
       </nav>
 
-      <section data-testid="hero-section" className="relative max-w-[1100px] mx-auto px-6 py-20 md:py-28 text-center overflow-hidden">
+      <section data-testid="hero-section" className="relative max-w-[1100px] mx-auto px-6 py-20 md:py-28 flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
         <div className="absolute inset-0 pointer-events-none select-none">
-          <GraduationCap className="absolute top-10 left-[10%] w-16 h-16 text-[var(--color-primary)] opacity-[0.04]" strokeWidth={1} />
-          <BookOpen className="absolute top-20 right-[15%] w-20 h-20 text-[var(--color-primary)] opacity-[0.04]" strokeWidth={1} />
-          <Sparkles className="absolute bottom-10 left-[20%] w-12 h-12 text-[var(--color-primary)] opacity-[0.04]" strokeWidth={1} />
-          <Sparkles className="absolute top-5 right-[30%] w-8 h-8 text-[var(--color-primary)] opacity-[0.03]" strokeWidth={1} />
+          <GraduationCap className="absolute top-10 left-[10%] w-20 h-20 text-[var(--color-primary)] opacity-[0.06]" strokeWidth={1} />
+          <BookOpen className="absolute top-20 right-[15%] w-28 h-28 text-[var(--color-primary)] opacity-[0.05]" strokeWidth={1} />
+          <Sparkles className="absolute bottom-10 left-[20%] w-16 h-16 text-[var(--color-primary)] opacity-[0.04]" strokeWidth={1} />
+          <Sparkles className="absolute top-5 right-[30%] w-10 h-10 text-[var(--color-primary)] opacity-[0.03]" strokeWidth={1} />
         </div>
 
-        <div className="relative">
-          <h2 className="font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-[var(--color-text-primary)] mb-4 animate-[fadeSlideUp_500ms_cubic-bezier(0.0,0.0,0.2,1.0)_0ms_both]">
+        <div className="relative flex-1 text-center lg:text-left">
+          <h2 className="font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-[var(--color-text-primary)] mb-4 animate-fade-slide-up">
             {content.hero_title}
           </h2>
-          <p className="text-lg text-[var(--color-text-secondary)] max-w-2xl mx-auto mb-8 animate-[fadeSlideUp_500ms_cubic-bezier(0.0,0.0,0.2,1.0)_100ms_both]">
+          <p className="text-lg md:text-xl text-[var(--color-text-secondary)] max-w-xl mb-8 leading-relaxed font-medium animate-fade-slide-up" style={{ animationDelay: '100ms' }}>
             {content.hero_subtitle}
           </p>
-          <div className="animate-[fadeSlideUp_500ms_cubic-bezier(0.0,0.0,0.2,1.0)_200ms_both]">
+          <div className="animate-fade-slide-up" style={{ animationDelay: '200ms' }}>
             <Link
               href="#harga-kelas"
               data-testid="hero-cta"
@@ -89,6 +89,21 @@ export default async function LandingPage() {
               {content.hero_cta_text}
               <span aria-hidden="true">&rarr;</span>
             </Link>
+          </div>
+        </div>
+
+        <div className="relative flex-1 hidden lg:flex items-center justify-center animate-fade-slide-up" style={{ animationDelay: '150ms' }}>
+          <div className="relative w-72 h-72">
+            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[var(--color-primary-lighter)] to-[var(--color-primary-ghost)] opacity-60 animate-pulse" style={{ animationDuration: '4s' }} />
+            <div className="absolute inset-4 rounded-full bg-white/80 backdrop-blur-sm border border-[var(--color-border)] flex items-center justify-center">
+              <div className="text-center">
+                <div className="w-16 h-16 rounded-full bg-[var(--color-primary)] flex items-center justify-center mx-auto mb-3 shadow-[0_4px_20px_rgba(183,110,121,0.3)]">
+                  <span className="text-white font-bold text-xl font-display">ESK</span>
+                </div>
+                <p className="font-display font-bold text-[var(--color-text-primary)] text-sm">English Sepulang Kerja</p>
+                <p className="text-xs text-[var(--color-text-secondary)] mt-1">Jadwal Rapi, Mengajar Tenang</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

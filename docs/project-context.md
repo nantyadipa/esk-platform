@@ -1,11 +1,11 @@
 ---
 project_name: 'SpecDrivenDevelopment'
 user_name: 'Anan TLab'
-date: '2026-05-08'
+date: '2026-05-10'
 sections_completed:
-  ['technology_stack', 'language_rules', 'framework_rules', 'testing_rules', 'quality_rules', 'workflow_rules', 'anti_patterns']
+  ['technology_stack', 'language_rules', 'framework_rules', 'testing_rules', 'quality_rules', 'workflow_rules', 'anti_patterns', 'storage_rules', 'animation_rules', 'image_rules', 'dependencies']
 status: 'complete'
-rule_count: 47
+rule_count: 55
 optimized_for_llm: true
 ---
 
@@ -19,16 +19,18 @@ _This file contains critical rules and patterns that AI agents must follow when 
 
 | Teknologi | Versi | Keterangan |
 |-----------|-------|------------|
-| Next.js | 14.x (App Router) | Monolith: SSR/SSG + API Routes + Server Actions |
-| React | 18.x | UI library (bundled dengan Next.js 14) |
+| Next.js | 16.2.5 (App Router, Turbopack) | Monolith: SSR/SSG + API Routes + Server Actions |
+| React | 19.2.4 | UI library (bundled dengan Next.js 16) |
 | TypeScript | 5.x | Strict mode WAJIB |
-| Drizzle ORM | Latest stable | ORM, type-safe SQL-like queries, tree-shakeable, migrations via drizzle-kit |
+| Drizzle ORM | 0.43.1 | ORM, type-safe SQL-like queries, tree-shakeable, migrations via drizzle-kit |
 | Supabase | Latest stable | PostgreSQL + Auth + Storage + Realtime + RLS |
+| shadcn/ui | Latest | UI primitives via Tailwind v4 |
 | FullCalendar | React latest | Calendar view admin dashboard |
+| Embla Carousel | 8.6.0 | Testimonial carousel (lightweight, autoplay plugin) |
 | Playwright | Latest stable | E2E testing framework |
 | pytest | Latest stable | Python test runner untuk Playwright |
 | hCaptcha | Latest | Spam prevention di form |
-| Lucide React | Latest | Icon library (outline style only, stroke 1.5px) |
+| Lucide React | 1.14.0 | Icon library (outline style only, stroke 1.5px) |
 | Plus Jakarta Sans | Google Fonts | Display/heading font (600, 700, 800) |
 | Inter | Google Fonts | Body/UI font (400, 500, 600) |
 | JetBrains Mono | Google Fonts | Monospace font (jika perlu) |
@@ -37,6 +39,8 @@ _This file contains critical rules and patterns that AI agents must follow when 
 **Key Dependencies:**
 - Supabase Client SDK — auth, storage, realtime
 - Drizzle ORM — schema-based types, SQL-like queries, database access
+- Embla Carousel React — testimonial carousel (embla-carousel-react + embla-carousel-autoplay)
+- Lucide React — icon library
 - `wa.me` URL scheme — bukan API, hanya URL generation
 - Rich text editor — TBD (dipilih saat implementation)
 
@@ -192,6 +196,34 @@ _This file contains critical rules and patterns that AI agents must follow when 
 - CMS update → landing page update <5 detik — gunakan `revalidatePath` atau ISR
 - Calendar view interaction <500ms — client-side state, JANGAN refetch seluruh data per view switch
 - Mobile 3G → above-fold content <8 detik — lazy load komponen di bawah fold
+
+### Image & Storage Rules
+
+- **Supabase Storage images:** Gunakan `<img>` biasa, BUKAN `next/image` — karena `next/image` optimization gagal untuk URL storage (host config issue). Tapi pertimbangkan trade-off LCP.
+- **Image attributes:** Wajib `loading="lazy"` untuk gallery photos & testimonial photos, `object-cover w-full h-full` untuk container konsisten
+- **Storage bucket setup:** Bucket harus public (`{ public: true }`). Butuh 6 RLS policies: Public SELECT + Auth INSERT/DELETE untuk masing-masing bucket (company-images, testimonial-photos)
+- **Upload validation:** Hanya JPEG, PNG, WebP. Maksimum 500KB per file. Path: `{bucket}/{uuid}-{filename}`
+- **Error fallback:** Background color fallback (`bg-[var(--color-bg-tinted)]`) untuk container image — tetap terlihat baik walau gambar broken
+
+### Animation Rules
+
+- **Scroll-triggered:** Gunakan `useScrollAnimation` hook dari `src/hooks/use-scroll-animation.ts` — Intersection Observer API, threshold 0.1, rootMargin -50px
+- **prefers-reduced-motion:** WAJIB untuk semua animasi. Gunakan `useSyncExternalStore` atau `@media (prefers-reduced-motion: reduce)` CSS
+- **Staggered entrance:** Delay 80ms per child via `getAnimationStyles(index * 80)` — maksimal untuk grid cards
+- **Carousel (testimoni):** Embla Carousel dengan logic: ≤3 testimoni = static grid, >3 = carousel dengan autoplay 4s + infinite loop
+- **Carousel autoplay:** `stopOnInteraction: false` (tetap jalan setelah klik manual), `stopOnMouseEnter: true` (pause saat hover)
+- **CSS keyframes:** Simpan di `src/styles/landing.css` — `@keyframes gradientShift`, `@keyframes slideInRight`, `@keyframes slideInLeft`
+- **Timing:** Default `500ms cubic-bezier(0.0, 0.0, 0.2, 1.0)` — ikuti `--duration-slow` dan `--ease-out` dari design tokens
+- **❌ JANGAN gunakan Framer Motion atau library animasi JS tambahan**
+
+### React 19 Lint Rules (Critical)
+
+Project menggunakan ESLint dengan rule `react-hooks` untuk React 19:
+- ❌ Jangan panggil `setState` secara synchronous di dalam `useEffect` body — pindahkan ke callback atau gunakan `useSyncExternalStore` untuk hydration-sensitive state
+- ❌ Jangan akses `ref.current` selama render — hanya di event handlers atau `useEffect`
+- ✅ Pattern aman: `useSyncExternalStore` untuk media queries / hydration detection
+- ✅ Pattern aman: `useCallback` + `.then()` chaining untuk async data fetching di `useEffect`
+- ✅ Pattern aman: `requestAnimationFrame` untuk defer setState dari effect
 
 ---
 
