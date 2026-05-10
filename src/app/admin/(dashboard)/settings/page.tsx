@@ -1,6 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { createBrowserClient } from '@supabase/ssr'
+import { updateAdminPasswordHash } from '@/lib/actions/auth-actions'
 
 export default function AdminSettingsPage() {
   const [whatsapp, setWhatsapp] = useState({ adminPhone: '', messageTemplate: '' })
@@ -11,6 +13,8 @@ export default function AdminSettingsPage() {
   const [savingProfile, setSavingProfile] = useState(false)
   const [savedProfile, setSavedProfile] = useState(false)
   const [errorProfile, setErrorProfile] = useState<string | null>(null)
+  const newPasswordRef = useRef<HTMLInputElement>(null)
+  const confirmPasswordRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     let ignore = false
@@ -49,17 +53,57 @@ export default function AdminSettingsPage() {
   }
 
   const handleSaveProfile = async () => {
-    setSavingProfile(true)
-    setErrorProfile(null)
-    try {
-      await new Promise((r) => setTimeout(r, 500))
+    const password = newPasswordRef.current?.value ?? ''
+    const confirm = confirmPasswordRef.current?.value ?? ''
+
+    if (!password && !confirm) {
       setSavedProfile(true)
       setTimeout(() => setSavedProfile(false), 2000)
-    } catch {
-      setErrorProfile('Gagal menyimpan. Coba lagi.')
-    } finally {
-      setSavingProfile(false)
+      return
     }
+
+    setSavingProfile(true)
+    setErrorProfile(null)
+
+    if (password !== confirm) {
+      setErrorProfile('Password dan konfirmasi tidak cocok.')
+      setSavingProfile(false)
+      return
+    }
+
+    if (password.length < 6) {
+      setErrorProfile('Password minimal 6 karakter.')
+      setSavingProfile(false)
+      return
+    }
+
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
+
+    const { error } = await supabase.auth.updateUser({ password })
+
+    if (error) {
+      setErrorProfile(error.message)
+      setSavingProfile(false)
+      return
+    }
+
+    const result = await updateAdminPasswordHash('admin@esk.id', password)
+
+    if (!result.success) {
+      setErrorProfile(result.error ?? 'Gagal menyimpan password ke database.')
+      setSavingProfile(false)
+      return
+    }
+
+    if (newPasswordRef.current) newPasswordRef.current.value = ''
+    if (confirmPasswordRef.current) confirmPasswordRef.current.value = ''
+    setSavedProfile(true)
+    setTimeout(() => setSavedProfile(false), 2000)
+
+    setSavingProfile(false)
   }
 
   if (loading) {
@@ -198,6 +242,7 @@ export default function AdminSettingsPage() {
                 Password Baru <span className="text-[var(--color-text-muted)] font-normal">(opsional)</span>
               </label>
               <input
+                ref={newPasswordRef}
                 id="newPassword"
                 type="password"
                 className="w-full px-4 py-2.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-page)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
@@ -210,6 +255,7 @@ export default function AdminSettingsPage() {
                 Konfirmasi Password
               </label>
               <input
+                ref={confirmPasswordRef}
                 id="confirmPassword"
                 type="password"
                 className="w-full px-4 py-2.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-page)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
