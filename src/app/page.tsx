@@ -1,6 +1,11 @@
 import Link from 'next/link'
+import { GraduationCap, Sparkles, BookOpen } from 'lucide-react'
 import { getActiveCourses, getAllContent } from '@/lib/actions/course-actions'
+import { getCompanyImages } from '@/lib/actions/company-image-actions'
+import { getActiveTestimonials } from '@/lib/actions/testimonial-actions'
 import { LandingClient } from '@/components/landing/landing-client'
+import { CompanyProfile } from '@/components/landing/company-profile'
+import { TestimonyCarousel } from '@/components/landing/testimony-carousel'
 
 export const revalidate = 300
 
@@ -12,16 +17,18 @@ const DEFAULT_CONTENT: Record<string, string> = {
 }
 
 export default async function LandingPage() {
-  const [courses, contentRecords] = await Promise.all([
+  const [courses, contentRecords, companyImages, activeTestimonials] = await Promise.all([
     getActiveCourses(),
     getAllContent(),
+    getCompanyImages(),
+    getActiveTestimonials(),
   ])
 
   const content = { ...DEFAULT_CONTENT, ...contentRecords }
 
   return (
-    <main data-testid="landing-page" className="min-h-screen bg-[var(--color-bg-page)]">
-      <nav data-testid="nav-header" className="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-[var(--color-border)]">
+    <main data-testid="landing-page" className="min-h-screen animated-gradient-bg">
+      <nav data-testid="nav-header" className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-[var(--color-border)]">
         <div className="max-w-[1100px] mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div
@@ -39,36 +46,60 @@ export default async function LandingPage() {
               </p>
             </div>
           </div>
-          <Link
-            href="#harga-kelas"
-            data-testid="nav-cta"
-            className="bg-[var(--color-primary)] text-white px-5 py-2.5 rounded-full text-sm font-semibold shadow-[var(--shadow-cta)] hover:bg-[var(--color-primary-dark)] transition-all"
-          >
-            Lihat Kelas
-          </Link>
+          <div className="flex items-center gap-3">
+            <a
+              href="#tentang-esk"
+              data-testid="nav-about"
+              className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-accent)] transition-colors hidden sm:block"
+            >
+              Tentang
+            </a>
+            <Link
+              href="#harga-kelas"
+              data-testid="nav-cta"
+              className="bg-[var(--color-primary)] text-white px-5 py-2.5 rounded-full text-sm font-semibold shadow-[var(--shadow-cta)] hover:bg-[var(--color-primary-dark)] transition-all"
+            >
+              Lihat Kelas
+            </Link>
+          </div>
         </div>
       </nav>
 
-      <section data-testid="hero-section" className="max-w-[1100px] mx-auto px-6 py-16 text-center">
-        <h2 className="font-display font-extrabold text-4xl md:text-5xl text-[var(--color-text-primary)] mb-4">
-          {content.hero_title}
-        </h2>
-        <p className="text-lg text-[var(--color-text-secondary)] max-w-2xl mx-auto mb-8">
-          {content.hero_subtitle}
-        </p>
-        <Link
-          href="#harga-kelas"
-          data-testid="hero-cta"
-          className="inline-flex items-center gap-2 bg-[var(--color-primary)] text-white px-8 py-4 rounded-full text-base font-semibold shadow-[var(--shadow-cta)] hover:bg-[var(--color-primary-dark)] hover:shadow-[var(--shadow-cta-lg)] hover:-translate-y-0.5 transition-all"
-        >
-          {content.hero_cta_text}
-          <span aria-hidden="true">&#8594;</span>
-        </Link>
+      <section data-testid="hero-section" className="relative max-w-[1100px] mx-auto px-6 py-20 md:py-28 text-center overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none select-none">
+          <GraduationCap className="absolute top-10 left-[10%] w-16 h-16 text-[var(--color-primary)] opacity-[0.04]" strokeWidth={1} />
+          <BookOpen className="absolute top-20 right-[15%] w-20 h-20 text-[var(--color-primary)] opacity-[0.04]" strokeWidth={1} />
+          <Sparkles className="absolute bottom-10 left-[20%] w-12 h-12 text-[var(--color-primary)] opacity-[0.04]" strokeWidth={1} />
+          <Sparkles className="absolute top-5 right-[30%] w-8 h-8 text-[var(--color-primary)] opacity-[0.03]" strokeWidth={1} />
+        </div>
+
+        <div className="relative">
+          <h2 className="font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-[var(--color-text-primary)] mb-4 animate-[fadeSlideUp_500ms_cubic-bezier(0.0,0.0,0.2,1.0)_0ms_both]">
+            {content.hero_title}
+          </h2>
+          <p className="text-lg text-[var(--color-text-secondary)] max-w-2xl mx-auto mb-8 animate-[fadeSlideUp_500ms_cubic-bezier(0.0,0.0,0.2,1.0)_100ms_both]">
+            {content.hero_subtitle}
+          </p>
+          <div className="animate-[fadeSlideUp_500ms_cubic-bezier(0.0,0.0,0.2,1.0)_200ms_both]">
+            <Link
+              href="#harga-kelas"
+              data-testid="hero-cta"
+              className="inline-flex items-center gap-2 bg-[var(--color-primary)] text-white px-8 py-4 rounded-full text-base font-semibold shadow-[var(--shadow-cta)] hover:bg-[var(--color-primary-dark)] hover:shadow-[var(--shadow-cta-lg)] hover:-translate-y-0.5 hover:scale-[1.02] transition-all"
+            >
+              {content.hero_cta_text}
+              <span aria-hidden="true">&rarr;</span>
+            </Link>
+          </div>
+        </div>
       </section>
+
+      <CompanyProfile images={companyImages} />
 
       <LandingClient courses={courses} />
 
-      <footer data-testid="footer" className="border-t border-[var(--color-border)] mt-16 py-8">
+      <TestimonyCarousel testimonials={activeTestimonials} />
+
+      <footer data-testid="footer" className="border-t border-[var(--color-border)] py-8">
         <div className="max-w-[1100px] mx-auto px-6 text-center text-sm text-[var(--color-text-secondary)] pb-16 md:pb-8">
           <p>{content.footer_copyright}</p>
         </div>

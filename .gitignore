@@ -47,3 +47,6 @@ _bmad*
 .*
 
 .vercel
+
+# dev logs
+dev-server*.log

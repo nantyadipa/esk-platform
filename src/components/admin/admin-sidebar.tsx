@@ -13,6 +13,8 @@ export function AdminSidebar() {
     { href: '/admin/students', label: 'Siswa', testId: 'admin-nav-students' },
     { href: '/admin/schedules', label: 'Jadwal', testId: 'admin-nav-schedules' },
     { href: '/admin/content', label: 'Konten', testId: 'admin-nav-content' },
+    { href: '/admin/content/company-photos', label: '— Foto Company', testId: 'admin-nav-company-photos' },
+    { href: '/admin/content/testimonials', label: '— Testimoni', testId: 'admin-nav-testimonials' },
     { href: '/admin/settings', label: 'Pengaturan', testId: 'admin-nav-settings' },
   ]
 

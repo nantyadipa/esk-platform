@@ -1,5 +1,5 @@
 import type { InferSelectModel } from 'drizzle-orm'
-import type { courses, students, schedules, contents, admins, whatsappConfigs } from '@/db/schema'
+import type { courses, students, schedules, contents, admins, whatsappConfigs, companyImages, testimonials } from '@/db/schema'
 
 export type ActionResult<T> = {
   success: boolean
@@ -13,3 +13,5 @@ export type Schedule = InferSelectModel<typeof schedules>
 export type Content = InferSelectModel<typeof contents>
 export type Admin = InferSelectModel<typeof admins>
 export type WhatsAppConfig = InferSelectModel<typeof whatsappConfigs>
+export type CompanyImage = InferSelectModel<typeof companyImages>
+export type Testimonial = InferSelectModel<typeof testimonials>

@@ -1,3 +1,4 @@
+import { Monitor, Users, Globe } from 'lucide-react'
 import { formatCurrency, calculateFinalPrice } from '@/lib/utils'
 
 type ModeAvailable = 'online' | 'offline' | 'both'
@@ -14,6 +15,12 @@ const modeBadges: Record<ModeAvailable, string> = {
   both: 'bg-[var(--color-primary-ghost)] text-[var(--color-text-accent)] border-[var(--color-border)]',
 }
 
+const modeIcons: Record<ModeAvailable, React.ComponentType<{ className?: string; strokeWidth?: number }>> = {
+  online: Monitor,
+  offline: Users,
+  both: Globe,
+}
+
 type CourseCardProps = {
   id: string
   name: string
@@ -23,6 +30,7 @@ type CourseCardProps = {
   numberOfSessions: number
   modeAvailable: ModeAvailable
   onSelect: (courseId: string, courseName: string) => void
+  isFeatured?: boolean
 }
 
 export function CourseCard({
@@ -34,24 +42,34 @@ export function CourseCard({
   numberOfSessions,
   modeAvailable,
   onSelect,
+  isFeatured,
 }: CourseCardProps) {
   const finalPrice = calculateFinalPrice(basePrice, discountRate)
   const hasDiscount = discountRate > 0 && discountRate < 1
   const isFree = discountRate >= 1
+  const ModeIcon = modeIcons[modeAvailable]
 
   return (
     <div
       data-testid={`course-card-${id}`}
-      className="bg-[var(--color-bg-surface)] rounded-[20px] border border-[var(--color-border)] shadow-[0_2px_12px_rgba(183,110,121,0.08)] hover:shadow-[0_4px_20px_rgba(183,110,121,0.15)] transition-all duration-200 overflow-hidden flex flex-col"
+      className={`bg-[var(--color-bg-surface)] rounded-[20px] border ${
+        isFeatured ? 'border-[var(--color-primary)] shadow-[0_4px_24px_rgba(183,110,121,0.2)]' : 'border-[var(--color-border)] shadow-[0_2px_12px_rgba(183,110,121,0.08)]'
+      } hover:shadow-[0_4px_20px_rgba(183,110,121,0.15)] transition-all duration-200 overflow-hidden flex flex-col`}
     >
+      {isFeatured && (
+        <div className="bg-[var(--color-primary)] text-white text-center text-xs font-semibold py-1.5">
+          Paling Populer
+        </div>
+      )}
       <div className="p-6 flex-1 flex flex-col">
         <div className="flex items-start justify-between mb-3">
           <h4 className="font-display font-bold text-xl text-[var(--color-text-primary)]">
             {name}
           </h4>
           <span
-            className={`text-xs font-medium px-2.5 py-1 rounded-full border ${modeBadges[modeAvailable]}`}
+            className={`text-xs font-medium px-2.5 py-1 rounded-full border inline-flex items-center gap-1 ${modeBadges[modeAvailable]}`}
           >
+            <ModeIcon className="w-3 h-3" strokeWidth={1.5} />
             {modeLabels[modeAvailable]}
           </span>
         </div>
@@ -104,7 +122,7 @@ export function CourseCard({
         <button
           data-testid={`course-cta-${id}`}
           onClick={() => onSelect(id, name)}
-          className="w-full bg-[var(--color-primary)] text-white py-3 rounded-full text-sm font-semibold shadow-[var(--shadow-cta)] hover:bg-[var(--color-primary-dark)] hover:shadow-[var(--shadow-cta-lg)] hover:-translate-y-0.5 transition-all active:translate-y-0 cursor-pointer"
+          className="w-full bg-[var(--color-primary)] text-white py-3 rounded-full text-sm font-semibold shadow-[var(--shadow-cta)] hover:bg-[var(--color-primary-dark)] hover:shadow-[var(--shadow-cta-lg)] hover:-translate-y-0.5 hover:scale-[1.02] transition-all active:translate-y-0 cursor-pointer"
         >
           Daftar Sekarang
         </button>
