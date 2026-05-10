@@ -113,3 +113,23 @@ export const whatsappConfigs = pgTable('WhatsAppConfig', {
   messageTemplate: text('messageTemplate').notNull(),
   updatedAt: timestamp('updatedAt', { withTimezone: true }).defaultNow().notNull(),
 })
+
+export const companyImages = pgTable('CompanyImage', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  url: text('url').notNull(),
+  altText: text('altText').notNull(),
+  sortOrder: integer('sortOrder').default(0).notNull(),
+  createdAt: timestamp('createdAt', { withTimezone: true }).defaultNow().notNull(),
+})
+
+export const testimonials = pgTable('Testimonial', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  name: text('name').notNull(),
+  origin: text('origin').notNull(),
+  quote: text('quote').notNull(),
+  rating: integer('rating').notNull(),
+  photoUrl: text('photoUrl'),
+  isActive: boolean('isActive').default(true).notNull(),
+  sortOrder: integer('sortOrder').default(0).notNull(),
+  createdAt: timestamp('createdAt', { withTimezone: true }).defaultNow().notNull(),
+})
