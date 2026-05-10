@@ -57,11 +57,12 @@ export function LandingClient({ courses }: LandingClientProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {activeCourses.map((course, i) => (
             <div
               key={course.id}
-              className={`animate-[fadeSlideUp_500ms_cubic-bezier(0.0,0.0,0.2,1.0)_${i * 80}ms_both]`}
+              className="animate-fade-slide-up"
+              style={{ animationDelay: `${i * 80}ms` }}
             >
               <CourseCard
                 id={course.id}

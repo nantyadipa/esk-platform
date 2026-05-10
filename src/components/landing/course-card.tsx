@@ -1,4 +1,7 @@
-import { Monitor, Users, Globe } from 'lucide-react'
+'use client'
+
+import { useState } from 'react'
+import { Monitor, Users, Globe, ChevronDown } from 'lucide-react'
 import { formatCurrency, calculateFinalPrice } from '@/lib/utils'
 
 type ModeAvailable = 'online' | 'offline' | 'both'
@@ -44,21 +47,25 @@ export function CourseCard({
   onSelect,
   isFeatured,
 }: CourseCardProps) {
+  const [expanded, setExpanded] = useState(false)
   const finalPrice = calculateFinalPrice(basePrice, discountRate)
   const hasDiscount = discountRate > 0 && discountRate < 1
   const isFree = discountRate >= 1
   const ModeIcon = modeIcons[modeAvailable]
+  const descriptionLong = description.length > 100
 
   return (
     <div
       data-testid={`course-card-${id}`}
-      className={`bg-[var(--color-bg-surface)] rounded-[20px] border ${
-        isFeatured ? 'border-[var(--color-primary)] shadow-[0_4px_24px_rgba(183,110,121,0.2)]' : 'border-[var(--color-border)] shadow-[0_2px_12px_rgba(183,110,121,0.08)]'
-      } hover:shadow-[0_4px_20px_rgba(183,110,121,0.15)] transition-all duration-200 overflow-hidden flex flex-col`}
+      className={`bg-[var(--color-bg-surface)] rounded-[20px] border h-full flex flex-col ${
+        isFeatured
+          ? 'border-[var(--color-primary)] shadow-[0_4px_24px_rgba(183,110,121,0.25)] ring-1 ring-[var(--color-primary)]/20'
+          : 'border-[var(--color-border)] shadow-[0_2px_12px_rgba(183,110,121,0.08)]'
+      } hover:shadow-[0_4px_20px_rgba(183,110,121,0.15)] transition-all duration-200`}
     >
       {isFeatured && (
-        <div className="bg-[var(--color-primary)] text-white text-center text-xs font-semibold py-1.5">
-          Paling Populer
+        <div className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] text-white text-center text-xs font-semibold py-1.5 tracking-wide shadow-[0_2px_8px_rgba(183,110,121,0.3)] rounded-t-[20px]">
+          &#9733; Paling Populer &#9733;
         </div>
       )}
       <div className="p-6 flex-1 flex flex-col">
@@ -74,9 +81,24 @@ export function CourseCard({
           </span>
         </div>
 
-        <p className="text-sm text-[var(--color-text-secondary)] mb-4 flex-1 leading-relaxed">
-          {description}
-        </p>
+        <div className={`relative ${descriptionLong && !expanded ? 'max-h-20 overflow-hidden' : ''}`}>
+          <p className="text-sm text-[var(--color-text-secondary)] mb-1 leading-relaxed">
+            {description}
+          </p>
+          {descriptionLong && !expanded && (
+            <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[var(--color-bg-surface)] to-transparent" />
+          )}
+        </div>
+
+        {descriptionLong && (
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="text-xs text-[var(--color-text-accent)] hover:text-[var(--color-primary-dark)] flex items-center gap-1 mb-3 transition-colors cursor-pointer self-start"
+          >
+            {expanded ? 'Ciutkan' : 'Baca selengkapnya'}
+            <ChevronDown className={`w-3 h-3 transition-transform ${expanded ? 'rotate-180' : ''}`} strokeWidth={2} />
+          </button>
+        )}
 
         <div className="flex items-center gap-2 mb-4 text-sm text-[var(--color-text-secondary)]">
           <span className="inline-flex items-center gap-1">
@@ -87,7 +109,7 @@ export function CourseCard({
           </span>
         </div>
 
-        <div className="mb-5" data-testid={`price-display-${id}`}>
+        <div data-testid={`price-display-${id}`}>
           {isFree ? (
             <div className="flex items-baseline gap-2">
               <span className="line-through text-[var(--color-text-muted)] text-sm">
@@ -118,7 +140,9 @@ export function CourseCard({
             </span>
           )}
         </div>
+      </div>
 
+      <div className="px-6 pb-6 pt-0">
         <button
           data-testid={`course-cta-${id}`}
           onClick={() => onSelect(id, name)}

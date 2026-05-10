@@ -1,8 +1,8 @@
 # Product Requirements Document (PRD)
 
 **English Sepulang Kerja (ESK) Platform**  
-**Version:** 2.0.0  
-**Date:** 2026-05-09  
+**Version:** 2.1.0  
+**Date:** 2026-05-10  
 **Status:** Production  
 
 ---

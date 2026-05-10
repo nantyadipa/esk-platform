@@ -8,7 +8,7 @@ import { eq, asc, sql } from 'drizzle-orm'
 import type { ActionResult } from '@/types'
 
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp']
-const MAX_FILE_SIZE = 500 * 1024
+const MAX_FILE_SIZE = 2048 * 1024
 
 export async function getCompanyImages() {
   const records = await db.select().from(companyImages).orderBy(asc(companyImages.sortOrder))
