@@ -1,0 +1,45 @@
+@layer utilities {
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 50% 0%; }
+    50% { background-position: 100% 50%; }
+    75% { background-position: 50% 100%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .animated-gradient-bg {
+    background: linear-gradient(
+      135deg,
+      #FFF8F0 0%,
+      #FFF0EC 25%,
+      #F5E1E4 50%,
+      #FFF0EC 75%,
+      #FFF8F0 100%
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 18s ease infinite;
+  }
+
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animated-gradient-bg {
+      animation: none;
+      background: #FFF8F0;
+    }
+    .animate-\[slideInRight_400ms_cubic-bezier\(0\.0\,0\.0\,0\.2\,1\.0\)_both\],
+    .animate-\[slideInLeft_400ms_cubic-bezier\(0\.0\,0\.0\,0\.2\,1\.0\)_both\] {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+}
