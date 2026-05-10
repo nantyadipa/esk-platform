@@ -20,7 +20,7 @@ Database PostgreSQL menolak penghapusan kursus karena ada data lain yang masih m
 2. **Tabel `Schedule`** — kolom `courseId` merujuk ke `Course.id`
 3. **Tabel `ScheduleStudent`** — merujuk ke `Schedule.id` (indirect)
 
-Ketika Prisma mengeksekusi `prisma.course.delete({ where: { id } })`, database throw `Foreign key constraint violated on the field` karena record-referensi tersebut masih ada.
+Ketika database query DELETE dijalankan langsung ke tabel `Course`, PostgreSQL throw `Foreign key constraint violated` karena record-referensi tersebut masih ada.
 
 ## Solution
 
@@ -28,48 +28,39 @@ Mengubah logika penghapusan kursus di API route `/api/courses/[id]/route.ts` aga
 
 ### Before
 ```typescript
-export async function DELETE(request: NextRequest, { params }: Params) {
-  const { id } = await params
-  try {
-    await prisma.course.delete({ where: { id } })
-    revalidatePath('/')
-    return NextResponse.json({ success: true })
-  } catch {
-    return NextResponse.json({ error: 'Gagal menghapus kursus' }, { status: 500 })
-  }
-}
+// Prisma: single query — fails due to FK constraint
+await prisma.course.delete({ where: { id } })
 ```
 
-### After
+### After (Drizzle ORM)
 ```typescript
-export async function DELETE(request: NextRequest, { params }: Params) {
-  const { id } = await params
-  try {
-    // Step 1: Unlink students from this course
-    await prisma.student.updateMany({
-      where: { selectedCourseId: id },
-      data: { selectedCourseId: null },
-    })
+import { db } from '@/lib/db'
+import { courses, students, schedules, scheduleStudents } from '@/db/schema'
+import { eq } from 'drizzle-orm'
 
-    // Step 2: Delete all schedules linked to this course
-    await prisma.schedule.deleteMany({ where: { courseId: id } })
+// Step 1: Unlink students
+await db.update(students)
+  .set({ selectedCourseId: null })
+  .where(eq(students.selectedCourseId, id))
 
-    // Step 3: Now safe to delete the course
-    await prisma.course.delete({ where: { id } })
-
-    revalidatePath('/')
-    return NextResponse.json({ success: true })
-  } catch {
-    return NextResponse.json({ error: 'Gagal menghapus kursus' }, { status: 500 })
-  }
+// Step 2: Delete junction + schedules
+const schedRecords = await db.select({ id: schedules.id })
+  .from(schedules)
+  .where(eq(schedules.courseId, id))
+for (const s of schedRecords) {
+  await db.delete(scheduleStudents).where(eq(scheduleStudents.scheduleId, s.id))
 }
+await db.delete(schedules).where(eq(schedules.courseId, id))
+
+// Step 3: Now safe to delete the course
+await db.delete(courses).where(eq(courses.id, id))
 ```
 
 ## Execution Order
 
-1. `student.updateMany` — Set `selectedCourseId` ke `null` untuk semua siswa yang terdaftar di kursus ini
-2. `schedule.deleteMany` — Hapus semua jadwal yang terkait dengan kursus ini (cascade ke `ScheduleStudent` otomatis oleh Prisma)
-3. `course.delete` — Hapus kursus itu sendiri
+1. `update(students).set(selectedCourseId: null)` — Lepas relasi siswa dari kursus
+2. `delete(scheduleStudents)` + `delete(schedules)` — Hapus jadwal + junction table (manual cascade)
+3. `delete(courses)` — Hapus kursus itu sendiri
 
 ## Testing
 

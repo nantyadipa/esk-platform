@@ -6,7 +6,7 @@ Platform web les bahasa Inggris dengan pendaftaran instan via WhatsApp.
 
 - **Framework:** Next.js 14 (App Router)
 - **Database:** Supabase (PostgreSQL)
-- **ORM:** Prisma
+- **ORM:** Drizzle ORM
 - **Styling:** Tailwind CSS + Design Tokens
 - **UI Components:** shadcn/ui + Radix UI
 - **Calendar:** FullCalendar React
@@ -23,11 +23,12 @@ npm install
 cp .env.example .env.local
 # Edit .env.local with your Supabase credentials
 
-# Run Prisma migrations
-npx prisma migrate dev
+# Generate Drizzle migrations & push to database
+npx drizzle-kit generate
+npx drizzle-kit push
 
 # Seed database (admin user + WhatsApp config)
-npx prisma db seed
+npm run seed
 
 # Run development server
 npm run dev
