@@ -1,16 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
+import { db } from '@/lib/db'
+import { courses as coursesTable, students, schedules, scheduleStudents } from '@/db/schema'
 import { courseSchema } from '@/lib/validations'
 import { revalidatePath } from 'next/cache'
+import { eq } from 'drizzle-orm'
 
 type Params = {
   params: Promise<{ id: string }>
 }
 
-export async function GET(request: NextRequest, { params }: Params) {
+export async function GET(_request: NextRequest, { params }: Params) {
   const { id } = await params
   try {
-    const course = await prisma.course.findUnique({ where: { id } })
+    const records = await db.select().from(coursesTable).where(eq(coursesTable.id, id)).limit(1)
+    const course = records[0]
     if (!course) {
       return NextResponse.json({ error: 'Kursus tidak ditemukan' }, { status: 404 })
     }
@@ -30,18 +33,15 @@ export async function PUT(request: NextRequest, { params }: Params) {
     const body = await request.json()
     const data = courseSchema.parse(body)
 
-    const course = await prisma.course.update({
-      where: { id },
-      data: {
-        name: data.name,
-        description: data.description,
-        basePrice: data.basePrice,
-        discountRate: data.discountRate,
-        numberOfSessions: data.numberOfSessions,
-        modeAvailable: data.modeAvailable,
-        isActive: data.isActive,
-      },
-    })
+    const [course] = await db.update(coursesTable).set({
+      name: data.name,
+      description: data.description,
+      basePrice: String(data.basePrice),
+      discountRate: String(data.discountRate),
+      numberOfSessions: data.numberOfSessions,
+      modeAvailable: data.modeAvailable,
+      isActive: data.isActive,
+    }).where(eq(coursesTable.id, id)).returning({ id: coursesTable.id })
 
     revalidatePath('/')
     return NextResponse.json({ id: course.id })
@@ -50,15 +50,16 @@ export async function PUT(request: NextRequest, { params }: Params) {
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: Params) {
+export async function DELETE(_request: NextRequest, { params }: Params) {
   const { id } = await params
   try {
-    await prisma.student.updateMany({
-      where: { selectedCourseId: id },
-      data: { selectedCourseId: null },
-    })
-    await prisma.schedule.deleteMany({ where: { courseId: id } })
-    await prisma.course.delete({ where: { id } })
+    await db.update(students).set({ selectedCourseId: null }).where(eq(students.selectedCourseId, id))
+    const schedRecords = await db.select({ id: schedules.id }).from(schedules).where(eq(schedules.courseId, id))
+    for (const s of schedRecords) {
+      await db.delete(scheduleStudents).where(eq(scheduleStudents.scheduleId, s.id))
+    }
+    await db.delete(schedules).where(eq(schedules.courseId, id))
+    await db.delete(coursesTable).where(eq(coursesTable.id, id))
     revalidatePath('/')
     return NextResponse.json({ success: true })
   } catch {

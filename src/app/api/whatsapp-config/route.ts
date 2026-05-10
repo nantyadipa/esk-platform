@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
+import { db } from '@/lib/db'
+import { whatsappConfigs } from '@/db/schema'
 import { revalidatePath } from 'next/cache'
+import { eq } from 'drizzle-orm'
 
 export async function GET() {
   try {
-    const config = await prisma.whatsAppConfig.findFirst()
-    return NextResponse.json(config || { adminPhone: '', messageTemplate: '' })
+    const configs = await db.select().from(whatsappConfigs).limit(1)
+    return NextResponse.json(configs[0] || { adminPhone: '', messageTemplate: '' })
   } catch {
     return NextResponse.json({ error: 'Gagal mengambil konfigurasi' }, { status: 500 })
   }
@@ -20,17 +22,15 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'No. WhatsApp admin wajib diisi' }, { status: 400 })
     }
 
-    const existing = await prisma.whatsAppConfig.findFirst()
+    const existing = await db.select().from(whatsappConfigs).limit(1)
 
-    if (existing) {
-      await prisma.whatsAppConfig.update({
-        where: { id: existing.id },
-        data: { adminPhone, messageTemplate: messageTemplate || existing.messageTemplate },
-      })
+    if (existing[0]) {
+      await db.update(whatsappConfigs).set({
+        adminPhone,
+        messageTemplate: messageTemplate || existing[0].messageTemplate,
+      }).where(eq(whatsappConfigs.id, existing[0].id))
     } else {
-      await prisma.whatsAppConfig.create({
-        data: { adminPhone, messageTemplate: messageTemplate || '' },
-      })
+      await db.insert(whatsappConfigs).values({ adminPhone, messageTemplate: messageTemplate || '' })
     }
 
     revalidatePath('/admin/settings')

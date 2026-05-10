@@ -1,6 +1,7 @@
 'use server'
 
-import { prisma } from '@/lib/db'
+import { db } from '@/lib/db'
+import { whatsappConfigs } from '@/db/schema'
 import { registrationFormSchema } from '@/lib/validations'
 import type { ActionResult } from '@/types'
 
@@ -38,7 +39,8 @@ export async function generateWhatsAppURL(formData: FormData): Promise<ActionRes
       referralCode: formData.get('referralCode') || undefined,
     })
 
-    const config = await prisma.whatsAppConfig.findFirst()
+    const configs = await db.select().from(whatsappConfigs).limit(1)
+    const config = configs[0]
     if (!config) {
       return { success: false, error: 'Konfigurasi WhatsApp tidak ditemukan.' }
     }

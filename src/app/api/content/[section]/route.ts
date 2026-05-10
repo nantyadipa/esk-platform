@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
+import { db } from '@/lib/db'
+import { contents } from '@/db/schema'
 import { revalidatePath } from 'next/cache'
+import { eq } from 'drizzle-orm'
 
 type Params = {
   params: Promise<{ section: string }>
@@ -16,25 +18,22 @@ export async function PUT(request: NextRequest, { params }: Params) {
       return NextResponse.json({ error: 'Data tidak valid' }, { status: 400 })
     }
 
-    const existing = await prisma.content.findFirst({ where: { section } })
+    const existing = await db.select().from(contents).where(eq(contents.section, section)).limit(1)
 
-    let record
-    if (existing) {
-      record = await prisma.content.update({
-        where: { id: existing.id },
-        data: {
-          content: contentText ?? existing.content,
-          imageUrl: imageUrl !== undefined ? imageUrl : existing.imageUrl,
-        },
-      })
+    let record: { id: string }
+    if (existing[0]) {
+      const [updated] = await db.update(contents).set({
+        content: contentText ?? existing[0].content,
+        imageUrl: imageUrl !== undefined ? imageUrl : existing[0].imageUrl,
+      }).where(eq(contents.id, existing[0].id)).returning({ id: contents.id })
+      record = updated
     } else {
-      record = await prisma.content.create({
-        data: {
-          section,
-          content: contentText ?? '',
-          imageUrl: imageUrl ?? null,
-        },
-      })
+      const [created] = await db.insert(contents).values({
+        section,
+        content: contentText ?? '',
+        imageUrl: imageUrl ?? null,
+      }).returning({ id: contents.id })
+      record = created
     }
 
     revalidatePath('/')

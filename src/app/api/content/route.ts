@@ -1,20 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
+import { db } from '@/lib/db'
+import { contents } from '@/db/schema'
+import { asc, eq } from 'drizzle-orm'
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const section = searchParams.get('section')
 
-    const where: Record<string, unknown> = {}
-    if (section) where.section = section
+    const records = await db
+      .select()
+      .from(contents)
+      .where(section ? eq(contents.section, section) : undefined)
+      .orderBy(asc(contents.section))
 
-    const content = await prisma.content.findMany({
-      where,
-      orderBy: { section: 'asc' },
-    })
-
-    return NextResponse.json(content)
+    return NextResponse.json(records)
   } catch {
     return NextResponse.json({ error: 'Gagal mengambil data konten' }, { status: 500 })
   }

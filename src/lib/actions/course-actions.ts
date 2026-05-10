@@ -1,15 +1,15 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { prisma } from '@/lib/db'
+import { db } from '@/lib/db'
+import { courses as coursesTable, contents, students } from '@/db/schema'
 import { courseSchema } from '@/lib/validations'
+import { eq, asc } from 'drizzle-orm'
 import type { ActionResult } from '@/types'
 
 export async function getCourses() {
-  const courses = await prisma.course.findMany({
-    orderBy: { basePrice: 'asc' },
-  })
-  return courses.map((c) => ({
+  const records = await db.select().from(coursesTable).orderBy(asc(coursesTable.basePrice))
+  return records.map((c) => ({
     ...c,
     basePrice: Number(c.basePrice),
     discountRate: Number(c.discountRate),
@@ -17,11 +17,8 @@ export async function getCourses() {
 }
 
 export async function getActiveCourses() {
-  const courses = await prisma.course.findMany({
-    where: { isActive: true },
-    orderBy: { basePrice: 'asc' },
-  })
-  return courses.map((c) => ({
+  const records = await db.select().from(coursesTable).where(eq(coursesTable.isActive, true)).orderBy(asc(coursesTable.basePrice))
+  return records.map((c) => ({
     ...c,
     basePrice: Number(c.basePrice),
     discountRate: Number(c.discountRate),
@@ -29,16 +26,28 @@ export async function getActiveCourses() {
 }
 
 export async function getContentSection(section: string): Promise<string> {
-  const record = await prisma.content.findFirst({ where: { section } })
-  return record?.content ?? ''
+  const records = await db.select().from(contents).where(eq(contents.section, section)).limit(1)
+  return records[0]?.content ?? ''
 }
 
 export async function getAllContent() {
-  const records = await prisma.content.findMany()
+  const records = await db.select().from(contents)
   return records.reduce<Record<string, string>>((acc, r) => {
     acc[r.section] = r.content
     return acc
   }, {})
+}
+
+function toCourseValues(data: { name: string; description: string; basePrice: number; discountRate: number; numberOfSessions: number; modeAvailable: 'online' | 'offline' | 'both'; isActive?: boolean }) {
+  return {
+    name: data.name,
+    description: data.description,
+    basePrice: String(data.basePrice),
+    discountRate: String(data.discountRate),
+    numberOfSessions: data.numberOfSessions,
+    modeAvailable: data.modeAvailable,
+    isActive: data.isActive ?? true,
+  }
 }
 
 export async function createCourse(formData: FormData): Promise<ActionResult<{ id: string }>> {
@@ -52,7 +61,7 @@ export async function createCourse(formData: FormData): Promise<ActionResult<{ i
       modeAvailable: formData.get('modeAvailable'),
     })
 
-    const course = await prisma.course.create({ data })
+    const [course] = await db.insert(coursesTable).values(toCourseValues(data)).returning({ id: coursesTable.id })
     revalidatePath('/')
     return { success: true, data: { id: course.id } }
   } catch {
@@ -71,7 +80,7 @@ export async function updateCourse(id: string, formData: FormData): Promise<Acti
       modeAvailable: formData.get('modeAvailable'),
     })
 
-    const course = await prisma.course.update({ where: { id }, data })
+    const [course] = await db.update(coursesTable).set(toCourseValues(data)).where(eq(coursesTable.id, id)).returning({ id: coursesTable.id })
     revalidatePath('/')
     return { success: true, data: { id: course.id } }
   } catch {
@@ -81,7 +90,8 @@ export async function updateCourse(id: string, formData: FormData): Promise<Acti
 
 export async function deleteCourse(id: string): Promise<ActionResult<null>> {
   try {
-    await prisma.course.delete({ where: { id } })
+    await db.update(students).set({ selectedCourseId: null }).where(eq(students.selectedCourseId, id))
+    await db.delete(coursesTable).where(eq(coursesTable.id, id))
     revalidatePath('/')
     return { success: true }
   } catch {

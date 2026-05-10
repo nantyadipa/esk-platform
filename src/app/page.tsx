@@ -69,10 +69,20 @@ export default async function LandingPage() {
       <LandingClient courses={courses} />
 
       <footer data-testid="footer" className="border-t border-[var(--color-border)] mt-16 py-8">
-        <div className="max-w-[1100px] mx-auto px-6 text-center text-sm text-[var(--color-text-secondary)]">
+        <div className="max-w-[1100px] mx-auto px-6 text-center text-sm text-[var(--color-text-secondary)] pb-16 md:pb-8">
           <p>{content.footer_copyright}</p>
         </div>
       </footer>
+
+      <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-white/95 backdrop-blur-sm border-t border-[var(--color-border)] md:hidden">
+        <a
+          href="#harga-kelas"
+          data-testid="btn-sticky-cta"
+          className="block w-full text-center bg-[var(--color-primary)] text-white px-6 py-3.5 rounded-full text-base font-semibold shadow-[var(--shadow-cta)] hover:bg-[var(--color-primary-dark)] transition-all"
+        >
+          Daftar Sekarang &rarr;
+        </a>
+      </div>
     </main>
   )
 }
