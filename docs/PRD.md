@@ -28,7 +28,7 @@ ESK Platform adalah platform web untuk les bahasa Inggris "English Sepulang Kerj
 | Styling | Tailwind CSS | v4 |
 | UI Components | shadcn/ui + Radix UI | Latest |
 | Database | PostgreSQL (Supabase) | Latest |
-| ORM | Prisma | Latest stable |
+| ORM | Drizzle ORM | Latest stable |
 | Auth | Supabase Auth | Latest |
 | Calendar | FullCalendar React | Latest |
 | Icons | Lucide React + Inline SVG | — |
@@ -371,9 +371,13 @@ ESK Platform adalah platform web untuk les bahasa Inggris "English Sepulang Kerj
 
 ```
 esk-platform/
-├── prisma/
-│   ├── schema.prisma       # Database schema
-│   └── seed.ts             # Seeder (admin + WhatsApp config)
+├── src/
+│   ├── db/
+│   │   ├── schema.ts       # Drizzle schema (tables, enums, relations)
+│   │   ├── index.ts        # Drizzle client singleton
+│   │   └── seed.ts         # Seeder (admin + WhatsApp config)
+│   ├── drizzle/            # Drizzle Kit generated migrations
+│
 ├── src/
 │   ├── app/
 │   │   ├── page.tsx        # Landing page (SSR)
@@ -404,7 +408,7 @@ esk-platform/
 │   │   ├── use-auth.tsx
 │   │   └── use-toast.ts
 │   ├── lib/
-│   │   ├── db.ts           # Prisma client singleton
+│   │   ├── db.ts           # Drizzle client singleton
 │   │   ├── utils.ts        # Currency, discount formatting
 │   │   ├── validations.ts  # Zod schemas
 │   │   ├── auth.ts         # Auth helpers

@@ -1,7 +1,7 @@
 # ESK Platform — Features & Functionality Overview
 
 **Version:** 2.0.0  
-**Last Updated:** 2026-05-09  
+**Last Updated:** 2026-05-10  
 
 ---
 
@@ -197,9 +197,15 @@ Editable sections (per section punya tombol simpan sendiri):
 - Inline success indicator
 
 ### 7.2 Admin Profile
-- Email (read-only)
-- Password Baru (opsional)
-- Konfirmasi Password
+- Email (read-only, default: `admin@esk.id`)
+- Password Baru (opsional) — input dengan `useRef`
+- Konfirmasi Password — validasi cocok dengan Password Baru
+- **Save behavior:**
+  1. Validasi client-side (min 6 karakter, konfirmasi cocok)
+  2. `supabase.auth.updateUser({ password })` — update di Supabase Auth
+  3. Server action `updateAdminPasswordHash()` — update di tabel `Admin.passwordHash`
+  4. Clear fields + "Tersimpan ✓" jika sukses
+  5. Error dari Supabase ditampilkan langsung ke user
 
 ### 7.3 Danger Zone
 - Tombol "Hapus Semua Data Siswa" dengan alert konfirmasi sederhana
@@ -257,7 +263,7 @@ Semua API routes mengembalikan JSON dengan format konsisten:
 ## 10. Database
 
 ### 10.1 PostgreSQL (Supabase)
-ORM: Prisma dengan generator `prisma-client`
+ORM: Drizzle ORM — schema-based types, SQL-like queries, drizzle-kit
 
 ### 10.2 Key Tables
 | Table | Purpose |
@@ -271,7 +277,7 @@ ORM: Prisma dengan generator `prisma-client`
 | `WhatsAppConfig` | Konfigurasi WhatsApp admin |
 
 ### 10.3 Cascading Behavior
-- Hapus `Schedule` → hapus `ScheduleStudent` terkait (implicit via Prisma)
+- Hapus `Schedule` → hapus `ScheduleStudent` terkait (manual cascade via query)
 - Hapus `Course` → manual: set `Student.selectedCourseId = null`, hapus `Schedule`, baru hapus `Course`
 
 ---
@@ -285,6 +291,7 @@ ORM: Prisma dengan generator `prisma-client`
 | [BF-003](bugfixes/BF-003-loading-states.md) | Tambah loading state pada semua tombol aksi CRUD | 3 admin pages | 2026-05-09 |
 | [BF-004](bugfixes/BF-004-sidebar-active-highlight.md) | Tambah highlight menu aktif di sidebar admin | `components/admin/admin-sidebar.tsx` | 2026-05-09 |
 | [BF-005](bugfixes/BF-005-cursor-pointer.md) | Tambah cursor pointer pada semua elemen button | 8+ files | 2026-05-09 |
+| [BF-006](bugfixes/BF-006-password-update.md) | Fix: password update tidak berfungsi di halaman Settings | `settings/page.tsx`, `auth-actions.ts` | 2026-05-10 |
 
 ---
 

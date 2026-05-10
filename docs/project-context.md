@@ -22,7 +22,7 @@ _This file contains critical rules and patterns that AI agents must follow when 
 | Next.js | 14.x (App Router) | Monolith: SSR/SSG + API Routes + Server Actions |
 | React | 18.x | UI library (bundled dengan Next.js 14) |
 | TypeScript | 5.x | Strict mode WAJIB |
-| Prisma | Latest stable | ORM, type-safe queries, migrations |
+| Drizzle ORM | Latest stable | ORM, type-safe SQL-like queries, tree-shakeable, migrations via drizzle-kit |
 | Supabase | Latest stable | PostgreSQL + Auth + Storage + Realtime + RLS |
 | FullCalendar | React latest | Calendar view admin dashboard |
 | Playwright | Latest stable | E2E testing framework |
@@ -36,7 +36,7 @@ _This file contains critical rules and patterns that AI agents must follow when 
 
 **Key Dependencies:**
 - Supabase Client SDK — auth, storage, realtime
-- Prisma Client — generated types, database queries
+- Drizzle ORM — schema-based types, SQL-like queries, database access
 - `wa.me` URL scheme — bukan API, hanya URL generation
 - Rich text editor — TBD (dipilih saat implementation)
 
@@ -48,8 +48,8 @@ _This file contains critical rules and patterns that AI agents must follow when 
 
 - TypeScript strict mode WAJIB (`"strict": true` di `tsconfig.json`) — no implicit any, strict null checks
 - Semua komponen React WAJIB `.tsx`, bukan `.jsx`
-- Type-safe Prisma queries: gunakan generated Prisma Client types, JANGAN hardcode type definitions duplikat
-- Database: `decimal` untuk harga (beware floating point), `enum` Prisma untuk status/kategori
+- Type-safe Drizzle queries: gunakan inferred types dari schema, JANGAN hardcode type definitions duplikat
+- Database: `decimal` untuk harga (beware floating point), `enum` Drizzle untuk status/kategori
 - Error handling: gunakan `Result<T, E>` pattern atau try-catch di Server Actions, JANGAN biarkan error silently fail
 - WhatsApp URL: `encodeURIComponent` untuk setiap field — generate di server side
 - Discount: `final_price = base_price * (1 - discount_rate)` — hitung di server side, JANGAN client-only
@@ -103,7 +103,7 @@ _This file contains critical rules and patterns that AI agents must follow when 
   - React components: PascalCase (`CourseCard`, `AdminLayout`)
   - Hooks: camelCase + `use` prefix (`useCourseList`, `useAuth`)
   - Server Actions: camelCase + verb prefix (`createCourse`, `updateSchedule`, `deleteStudent`)
-  - Prisma models: PascalCase singular (`Course`, `Student`, `Schedule`)
+  - Drizzle tables: PascalCase singular match DB (`Course`, `Student`, `Schedule`)
   - DB columns: snake_case (`base_price`, `discount_rate`, `created_at`)
   - data-testid: kebab-case + context (`course-card-price`, `admin-btn-save`, `schedule-slot-time`)
 - **File/folder structure:**
@@ -122,7 +122,7 @@ _This file contains critical rules and patterns that AI agents must follow when 
     landing/             # Landing page components
     admin/               # Admin dashboard components
   lib/
-    db.ts               # Prisma client singleton
+    db.ts               # Drizzle client singleton (re-exports from @/db)
     auth.ts             # Supabase auth helpers
     whatsapp.ts         # WhatsApp URL generator
     utils.ts            # Formatting helpers (currency, date)
@@ -149,7 +149,7 @@ _This file contains critical rules and patterns that AI agents must follow when 
   - `.env.example` WAJIB di commit dengan placeholder values
   - Supabase URL, anon key, redirect URL di environment variables
 - **Database workflow:**
-  - Edit `schema.prisma` → `npx prisma migrate dev` → `npx prisma generate`
+  - Edit `src/db/schema.ts` → `npx drizzle-kit generate` → `npx drizzle-kit push` (development)
   - JANGAN edit DB secara manual (SQL) kecuali emergency
   - Migration WAJIB di-review sebelum deploy ke production
 
